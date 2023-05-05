@@ -127,5 +127,44 @@
             "image": "https://healthiv.com/wp-content/uploads/2021/12/NAD.png",
             "id": 18
         }
+    ],
+    "cities" : [
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/newyork.png",
+            "city" : "New York"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/miami.png",
+            "city" : "Florida"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/austin.png",
+            "city" : "Texas"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/la.png",
+            "city" : "Los Angeles"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/nj.png",
+            "city" : "New Jersey"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/az.png",
+            "city" : "Arizona"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/pa.png",
+            "city" : "Pennsylvania"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/miami.png",
+            "city" : "California"
+        },
+        {
+            "cityImage" : "https://healthiv.com/wp-content/themes/intra/media/nj.png",
+            "city" : "Las Vegas"
+        }
+        
     ]
 }
