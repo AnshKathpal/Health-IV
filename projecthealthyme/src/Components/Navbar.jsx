@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { Button, ButtonGroup, Stack, HStack, VStack } from "@chakra-ui/react";
 import { Logo } from "../Structure/Logo";
+import Login from "../pages/Login";
 import { useState } from "react";
 
 const links = [
@@ -34,7 +35,9 @@ const links = [
 
 export function Navbar() {
 
+  const [loginStatus, setLoginStatus] = useState(false);
 
+  console.log(loginStatus);
 
 
   const defaultStyle = {
@@ -71,7 +74,7 @@ export function Navbar() {
                 <Button
                   fontSize="12px"
                   p={6}
-                  bg= "rgb(80,133,104)"
+                  bg="rgb(80,133,104)"
                   variant="solid"
                   boxShadow="base"
                 >
@@ -80,6 +83,25 @@ export function Navbar() {
               </NavLink>
             );
           })}
+
+{loginStatus ? (
+        // <Notices userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)} />
+        
+        <Button  fontSize="12px"
+        color = "white"
+        p={6}
+        bg="rgb(80,133,104)"
+        variant="solid"
+        boxShadow="base" userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)}>
+{loginStatus.name}
+        </Button>
+        // <h1 userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)}>{loginStatus.name}</h1>
+      ) : (
+        <Login  isLoggedIn={(e) => setLoginStatus(e)} />
+      )}
+
+
+         
         </ButtonGroup>
       </Flex>
     </Box>
