@@ -1,4 +1,6 @@
 import { Navbar } from "../Components/Navbar";
+import { Footer } from "../Structure/Footer";
+import { Link } from "react-router-dom";
 import {
   Text,
   Container,
@@ -15,6 +17,7 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
+import AnchorLink from "react-anchor-link-smooth-scroll"
 import IVImage from "../Images/IVImage.png";
 import Iphone from "../Images/Iphone.png";
 import Home from "../Images/Home.png";
@@ -94,10 +97,15 @@ export function Treatement({ text }) {
 
         <Flex justifyContent="flex-end" width="40%" marginLeft="800px">
           <Box>
+            <Link to="/form">
             <Button mr={20}>Become a Member</Button>
+            </Link>
+            <AnchorLink href="#container">
+
             <Button bgGradient="linear( rgb(51,99,100), rgb(167,210,137))">
               Book Session
             </Button>
+            </AnchorLink>
           </Box>
         </Flex>
       </Container>
@@ -143,7 +151,7 @@ export function Treatement({ text }) {
             </Text>
           </Box>
         </Flex>
-        <Box className="mainContainer">
+        <Box className="mainContainer" id="container">
           <Grid
             // border="1px solid red"
             templateColumns="repeat(4, 1fr)"
@@ -172,10 +180,13 @@ export function Treatement({ text }) {
                   <Text mt={3} pl={7} align="left" fontSize={30} color="white">
                     $ {item.price}
                   </Text>
+                  <Link to={`/booktreatement/${item.id}`}>
                   <Button>
                     {" "}
                     <ArrowRightIcon />{" "}
                   </Button>
+                  </Link>
+                  
                 </HStack>
                 {/* <Text color="white">{item.description}</Text> */}
               </GridItem>
@@ -334,64 +345,21 @@ export function Treatement({ text }) {
             <Text mt={5} fontWeight="bolder" fontSize={15} color="black">
               Receive a credit towards any treatment under $500 each month.
             </Text>
+            <Link to="/form">
             <Button mt={10} color="white" bg="black">
               Become a Member
             </Button>
+            </Link>
           </Box>
         </Flex>
       </Container>
 
       {/* <Container maxW="100%" h={400} bg="black"> */}
 
-      <Flex
-        maxW="100%"
-        h={500}
-        bg="black"
-        justifyContent="space-evenly"
-        alignItems="center"
-      >
-        <Image width="20%" src={Logo} alt="logo" />
 
-        <VStack
-          spacing={8}
-          color="white"
-          
-          width="300px"
-          h="auto"
-        >
-          <Text
-            fontWeight="semibold"
-            bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
-            bgClip="text"
-          >
-            Menu
-          </Text>
-          <Text fontWeight="semibold">TREATMENTS</Text>
-          <Text fontWeight="semibold">BLOGS</Text>
-          <Text fontWeight="semibold">ABOUT US</Text>
-          <Text fontWeight="semibold">CONTACT</Text>
-          <Text fontWeight="semibold">LOGIN</Text>
-        </VStack>
-        <VStack
-        spacing={8}
-        color="white"
-        width="300px"
-        h="auto"
-        mt="-165px"
-        >
-          <Text
-            fontWeight="semibold"
-            bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
-            bgClip="text"
-          >
-           Contact
-          </Text>
-          <Text fontWeight="semibold">8448837130</Text>
-          <Text fontWeight="semibold">anshkathpal17@gmail.com</Text>
+      <Footer />
 
-        </VStack>
-      </Flex>
-      {/* </Container> */}
+      
     </>
   );
 }
