@@ -1,10 +1,25 @@
 import { Box } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { Flex, Spacer } from "@chakra-ui/react";
+import {
+  Flex,
+  Spacer,
+  Image,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from "@chakra-ui/react";
 import { Button, ButtonGroup, Stack, HStack, VStack } from "@chakra-ui/react";
 import { Logo } from "../Structure/Logo";
 import Login from "../pages/Login";
 import { useState } from "react";
+import logoImage from "../Images/cropped.png";
+import { Link } from "react-router-dom";
+import { ToggleButton } from "../Structure/ToggleButton";
 
 const links = [
   {
@@ -23,10 +38,10 @@ const links = [
     path: "/contact",
     title: "CONTACT",
   },
-  {
-    path: "/pressarticles",
-    title: "PRESS ARTICLES",
-  },
+  // {
+  //   path: "/pressarticles",
+  //   title: "PRESS ARTICLES",
+  // },
   {
     path: "/cart",
     title: "CART",
@@ -34,11 +49,9 @@ const links = [
 ];
 
 export function Navbar() {
-
   const [loginStatus, setLoginStatus] = useState(false);
 
   console.log(loginStatus);
-
 
   const defaultStyle = {
     color: "White",
@@ -58,7 +71,10 @@ export function Navbar() {
     >
       <Flex minWidth="max-content" alignItems="center" gap="2">
         <Box p="2">
-          <Logo border="1px solid red" />
+          {/* <Logo border="1px solid red" /> */}
+          <Link to="/">
+            <Image w="250px" src={logoImage}></Image>
+          </Link>
         </Box>
         <Spacer />
         <ButtonGroup>
@@ -84,24 +100,27 @@ export function Navbar() {
             );
           })}
 
-{loginStatus ? (
-        // <Notices userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)} />
-        
-        <Button  fontSize="12px"
-        color = "white"
-        p={6}
-        bg="rgb(80,133,104)"
-        variant="solid"
-        boxShadow="base" userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)}>
-{loginStatus.name}
-        </Button>
-        // <h1 userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)}>{loginStatus.name}</h1>
-      ) : (
-        <Login  isLoggedIn={(e) => setLoginStatus(e)} />
-      )}
+          {loginStatus ? (
+            // <Notices userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)} />
 
+            // <Button
+            //   fontSize="12px"
+            //   color="white"
+            //   p={6}
+            //   bg="rgb(80,133,104)"
+            //   variant="solid"
+            //   boxShadow="base"
+            //   userData={loginStatus}
+            //   isLoggedIn={(e) => setLoginStatus(e)}
+            // >
+            //   {loginStatus.name}
+            // </Button>
 
-         
+            <ToggleButton userData={loginStatus}  isLoggedIn={(e) => setLoginStatus(e)} />
+          ) : (
+            // <h1 userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)}>{loginStatus.name}</h1>
+            <Login isLoggedIn={(e) => setLoginStatus(e)} />
+          )}
         </ButtonGroup>
       </Flex>
     </Box>

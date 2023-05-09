@@ -1,5 +1,7 @@
-import { useParams } from 'react-router-dom'
-import { useState, useEffect,useReducer } from 'react';
+import { useParams } from "react-router-dom";
+import { useState, useEffect, useReducer, useContext } from "react";
+import { AuthContext } from "../Context/AuthContextProvider";
+import { useNavigate } from "react-router-dom";
 
 import {
   Text,
@@ -31,124 +33,151 @@ import axios from "axios";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 import { Footer } from "../Structure/Footer";
-import AnchorLink from "react-anchor-link-smooth-scroll"
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 const initialState = {
-    location: "",
-    address: "",
-    treatement: "",
-    addBooster: "",
-    schedule: "",
-  };
-  
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "Update_location": {
-        return {
-          ...state,
-          location: action.payload,
-        };
-      }
-      case "UpdateAddress": {
-        return {
-          ...state,
-          address: action.payload,
-        };
-      }
-      case "Update_treatement": {
-        return {
-          ...state,
-          treatement: action.payload,
-        };
-      }
-      case "Update_Booster": {
-        return {
-          ...state,
-          addBooster: action.payload,
-        };
-      }
-      case "Update_schedule": {
-        return {
-          ...state,
-          schedule: action.payload,
-        };
-      }
-      case "Update_form": {
-        return {
-          // ...state,
-          // cartItems : [...state.cartItems, action.payload]
-          ...initialState,
-        };
-      }
-      default:
-        throw new Error(`actiontype ${action.type} not supported`);
+  location: "",
+  address: "",
+  treatement: "",
+  addBooster: "",
+  schedule: "",
+  price: "",
+  image: "",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "Update_location": {
+      return {
+        ...state,
+        location: action.payload,
+      };
     }
-  };
+    case "UpdateAddress": {
+      return {
+        ...state,
+        address: action.payload,
+      };
+    }
+    case "Update_treatement": {
+      return {
+        ...state,
+        treatement: action.payload,
+      };
+    }
+    case "Update_Booster": {
+      return {
+        ...state,
+        addBooster: action.payload,
+      };
+    }
+    case "Update_schedule": {
+      return {
+        ...state,
+        schedule: action.payload,
+      };
+    }
+    case "Update_form": {
+      return {
+        // ...state,
+        // cartItems : [...state.cartItems, action.payload]
+        ...initialState,
+      };
+    }
+    case "Update_price": {
+      return {
+        ...state,
+        price: action.payload,
+      };
+    }
+    default:
+      throw new Error(`actiontype ${action.type} not supported`);
+  }
+};
+
+export function BookTreatement() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+
+  const navigate = useNavigate();
+  // const [submittedData, setSubmittedData] = useState([]);
+
+  const { submittedData, setSubmittedData, data, setData } =
+    useContext(AuthContext);
+
+  const { id } = useParams();
+  console.log(id);
+
+  // const [data,setData] = useState([]);
+
+  const fetchData = async () => {
 
 
 
-
-
-export function BookTreatement(){
-
-
-    const [state, dispatch] = useReducer(reducer, initialState);
-
-  const [submittedData, setSubmittedData] = useState([]);
-
-    const {id} = useParams();
-    console.log(id)
-
-
-    const [data,setData] = useState([]);
-
-  const fetchData = async() => {
-    let res = await fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/treatments/${id}`)
-    let data = await res.json()
+    let res = await fetch(
+      `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/treatments/${id}`
+    );
+    let data = await res.json();
     // let fetchedData = await data.products;
     setData(data);
     console.log(data);
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData(id);
-  },[id])
-
+  }, [id]);
 
   const updateForm = (e) => {
     e.preventDefault();
-    setSubmittedData([...submittedData, state]);
 
-    dispatch({
-      type: "Update_form",
-    });
+    console.log("state",state)
+      return axios({
+        method: "post",
+        url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`,
+        data: state,
+      }).then((res)=>{
+        console.log(res);
+        dispatch({
+          type : "Update_form"
+        })
 
-    console.log(state);
+        navigate("/cart")
+      })
+
+     
+
+
+
+
+
+    // setSubmittedData([...submittedData, state]);
+
+    // console.log("submitted", submittedData);
+
+    // dispatch({
+    //   type: "Update_form",
+    // });
+
+    // console.log(state);
   };
 
-
-
-
-
-
-    return (
-        <>
-        <Container
+  return (
+    <>
+      <Container
         maxW="100%"
         // border="1px solid White"
         bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)"
       >
-        
         <Flex
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
           height="750px"
           width="70%"
-        //   border="1px solid red"
+          //   border="1px solid red"
           margin="auto"
         >
-            <Image mt={-10} width="250px"  src={data.image} />
+          <Image mt={-10} width="250px" src={data.image} />
           <Text mt={-10} color="white" fontWeight="bolder" fontSize="60px">
             {data.title}
           </Text>
@@ -156,12 +185,15 @@ export function BookTreatement(){
             ${data.price}
           </Text>
           <Text mt="20px" color="white" fontSize="30px">
-           {data.description}
+            {data.description}
           </Text>
-          <AnchorLink href='#formBooking'>
-          <Button  bgGradient="linear( rgb(51,99,100), rgb(167,210,137))" mt={10}>
-            Book Now
-          </Button>
+          <AnchorLink href="#formBooking">
+            <Button
+              bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
+              mt={10}
+            >
+              Book Now
+            </Button>
           </AnchorLink>
         </Flex>
       </Container>
@@ -170,6 +202,9 @@ export function BookTreatement(){
         <Text mb="10px" mt={12} color="white" fontSize="60px">
           Fill out the form below to book your session
         </Text>
+
+<form  onSubmit={updateForm}>
+
         <FormControl
           p="40px"
           border="2px solid white"
@@ -193,6 +228,7 @@ export function BookTreatement(){
               onChange={(e) => {
                 dispatch({ type: "Update_location", payload: e.target.value });
               }}
+              required
             >
               <option value="">Select an Option</option>
               <option value="New York">New York</option>
@@ -211,6 +247,7 @@ export function BookTreatement(){
             onChange={(e) => {
               dispatch({ type: "UpdateAddress", payload: e.target.value });
             }}
+            required
           ></Textarea>
           <FormLabel color="white" mt={10} fontSize="50px">
             3. Treatement
@@ -228,19 +265,8 @@ export function BookTreatement(){
                   payload: e.target.value,
                 });
               }}
-           / >
-              {/* <option value="">Select an Option</option>
-              <option value="all">All Inclusive</option>
-              <option value="hydration">Hydration</option>
-              <option value="Energy Lift">Energy Lift</option>
-              <option value="Recovery">Recovery</option>
-              <option value="Beauty">Beauty</option>
-              <option value="Immune Boost">Immune Boost</option>
-              <option value="Weight Loss">Weight Loss</option>
-              <option value="Stomach Flu">Stomach Flu</option>
-              <option value="Hangover">Hangover</option>
-              <option value="Myers Cocktail">Myers Cocktail</option> */}
-            {/* </Select> */}
+              required
+            />
           </Box>
           <FormLabel color="white" mt={10} fontSize="50px">
             4. Add-On's
@@ -259,6 +285,7 @@ export function BookTreatement(){
               onChange={(e) => {
                 dispatch({ type: "Update_Booster", payload: e.target.value });
               }}
+              required
             >
               <option value="">Select an Option</option>
               <option value="B-complex">B-complex</option>
@@ -278,11 +305,29 @@ export function BookTreatement(){
             </Text>
             <Input
               color="white"
-              type="date"
+              type="datetime-local"
               value={state.schedule}
               onChange={(e) => {
                 dispatch({ type: "Update_schedule", payload: e.target.value });
               }}
+              required
+            />
+          </Box>
+
+          <FormLabel color="white" mt={10} fontSize="50px">
+            5. Price
+          </FormLabel>
+          <Box mt={17}>
+            <Input
+              color="white"
+              value={data.price}
+              onChange={(e) => {
+                dispatch({
+                  type: "Update_price",
+                  payload: data.price,
+                });
+              }}
+              required
             />
           </Box>
 
@@ -292,14 +337,15 @@ export function BookTreatement(){
             bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)"
             w="100%"
             mt={10}
-            onClick={updateForm}
+            type="submit"
+           
           >
             Continue to Cart
           </Button>
         </FormControl>
+        </form>
       </Container>
       <Footer />
-
-        </>
-    )
+    </>
+  );
 }

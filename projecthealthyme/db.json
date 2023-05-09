@@ -20,6 +20,34 @@
       "password": "cdddd",
       "phoneNo": "8378732",
       "id": 3
+    },
+    {
+      "name": "Anshu Kathpal",
+      "email": "check@gmail.com",
+      "password": "asdf123",
+      "phoneNo": "89378290210",
+      "id": 4
+    },
+    {
+      "name": "Anshhhh",
+      "email": "checking@gmail.com",
+      "password": "asdf123",
+      "phoneNo": "5671628323",
+      "id": 5
+    },
+    {
+      "name": "Anshu",
+      "email": "signupcheck@gmail.com",
+      "password": "asdf321",
+      "phoneNo": "8448837130",
+      "id": 6
+    },
+    {
+      "name": "Anshhhhh Kathpallll",
+      "email": "anshchecking@gmail.com",
+      "password": "asdf123",
+      "phoneNo": "5672537893",
+      "id": 7
     }
   ],
   "treatments": [
@@ -190,6 +218,15 @@
     }
   ],
   "cart": [
-    {}
+    {
+      "location": "Texas",
+      "address": "bvghcjsdcsd",
+      "treatement": "Energy Liftt",
+      "addBooster": "Gultathione",
+      "schedule": "2023-05-18T21:25",
+      "price": "129",
+      "image": "",
+      "id": 3
+    }
   ]
 }

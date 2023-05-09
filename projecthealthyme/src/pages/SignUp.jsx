@@ -1,13 +1,49 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import {
+  Text,
+  Container,
+  Box,
+  Flex,
+  Image,
+  HStack,
+  Button,
+  Spacer,
+  Grid,
+  GridItem,
+  FormLabel,
+  FormControl,
+  Input,
+  VStack,
+  Textarea,
+  Select,
+  Hr,
+} from "@chakra-ui/react";
+import IVImage from "../Images/IVImage.png";
+import Iphone from "../Images/Iphone.png";
+import Home from "../Images/Home.png";
+import Mobile from "../Images/Mobile1.jpg";
+import HomeTherapy from "../Images/HomeTherapy.png";
+import Logo from "../Images/logo.png";
+import axios from "axios";
+
+import { ArrowRightIcon } from "@chakra-ui/icons";
+import { useToast } from "@chakra-ui/react";
+import { Footer } from "../Structure/Footer";
+import AnchorLink from "react-anchor-link-smooth-scroll";
 
 function SignUp() {
-
   const [users, setUsers] = useState([]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phoneNo, setPhoneNo] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+
+  const navigate = useNavigate();
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,92 +52,127 @@ function SignUp() {
     const newUser = {
       name: name,
       email: email,
-      password : password,
-      phoneNo: phoneNo
+      password: password,
+      phoneNo: phoneNo,
     };
-
 
     try {
       // Make a POST request to the API to save the user
-      const response = await fetch(`http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/users`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newUser)
-      });
+      const response = await fetch(
+        `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        }
+      );
 
       if (response.ok) {
         // If the user was successfully saved, add it to the existing list of users
         const savedUser = await response.json();
-        console.log(savedUser)
+        console.log(savedUser);
         setUsers([...users, savedUser]);
+        navigate("/");
       } else {
-        console.error('Failed to save user');
+        console.error("Failed to save user");
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
 
     // Clear the input fields after submission
-    setName('');
-    setEmail('');
-    setPassword('');
-    setPhoneNo('');
+    setName("");
+    setEmail("");
+    setPassword("");
+    setPhoneNo("");
   };
 
-
-
   return (
-    <div className="App">
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Phone Number:</label>
-          <input
-            type="number"
-            value={phoneNo}
-            onChange={(e) => setPhoneNo(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <>
+      <Container bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)" maxW="100%">
+        <Box p={10} width="70%" margin="auto" border="1px solid white">
+          <Text fontSize="40px" marginBottom={10} color="white">
+            <u>Sign Up To HealthIV</u>
+          </Text>
 
-<p>Already have Account <Link to="/login">Login</Link> </p>
+          <form onSubmit={handleSubmit}>
+          <FormControl isRequired>
+            <FormLabel fontSize="20px" color="white">
+              Name
+            </FormLabel>
+            <Input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              color="white"
+              mb="10px"
+              required
+            />
 
-      {/* <h2>Users:</h2>
-      <ul>
-        {users.map((user, index) => (
-          <li key={index}>
-            <strong>Name:</strong> {user.name}, <strong>Email:</strong> {user.email}
-          </li>
-        ))}
-      </ul> */}
-    </div>
+            <FormLabel fontSize="20px" color="white">
+              Email Address
+            </FormLabel>
+            <Input
+              color="white"
+              mb="10px"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            <FormLabel fontSize="20px" color="white">
+              Phone Number
+            </FormLabel>
+            <Input
+              value={phoneNo}
+              onChange={(e) => setPhoneNo(e.target.value)}
+              color="white"
+              type="text"
+              required
+            />
+
+            <FormLabel fontSize="20px" color="white">
+              Set Password
+            </FormLabel>
+            <Input
+              color="white"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Button
+              // onClick={handleSubmit}
+              // onClick={() =>
+
+              //   toast({
+              //     title: "Message Sent",
+              //     description: "We wll try to reach you soon",
+              //     status: "success",
+              //     duration: 2000,
+              //     isClosable: true,
+              //   })
+              // }
+              bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
+              mt={5}
+              width="100%"
+              type="submit"
+            >
+              Sign Up
+            </Button>
+          </FormControl>
+          </form>
+
+          <Text mt="70px" fontSize="20px" color="white">
+            Already have Account <Link to="/"><span><u>Login</u></span></Link>{" "}
+          </Text>
+        </Box>
+      </Container>
+      <Footer />
+    </>
   );
 }
 
