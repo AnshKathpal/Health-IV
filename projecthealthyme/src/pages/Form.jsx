@@ -1,5 +1,6 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useContext } from "react";
 import AnchorLink from "react-anchor-link-smooth-scroll";
+import { useNavigate } from "react-router-dom";
 import {
   Text,
   Container,
@@ -18,6 +19,10 @@ import {
   Textarea,
   Select,
   Hr,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
 import IVImage from "../Images/IVImage.png";
 import Iphone from "../Images/Iphone.png";
@@ -30,6 +35,7 @@ import { useEffect } from "react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 import { Footer } from "../Structure/Footer";
+import { AuthContext } from "../Context/AuthContextProvider";
 
 // import Calendar from 'moedim';
 
@@ -39,6 +45,7 @@ const initialState = {
   treatement: "",
   addBooster: "",
   schedule: "",
+  price : "199"
 };
 
 const reducer = (state, action) => {
@@ -88,10 +95,37 @@ const reducer = (state, action) => {
 export function Form() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [submittedData, setSubmittedData] = useState([]);
+  const navigate = useNavigate();
+
+  
+
+  // const [submittedData, setSubmittedData] = useState([]);
+
+  const {submittedData, setSubmittedData} = useContext(AuthContext);
+
+  console.log("state",state);
+  console.log("data" , submittedData);
 
   const updateForm = (e) => {
     e.preventDefault();
+
+
+    console.log("state",state)
+      return axios({
+        method: "post",
+        url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`,
+        data: state,
+      }).then((res)=>{
+        console.log(res);
+        dispatch({
+          type : "Update_form",
+          price : "199"
+        })
+        
+        navigate("/cart")
+      })
+
+
 
     // const userCart = {
     //   location,
@@ -127,6 +161,9 @@ export function Form() {
     // }
 
     setSubmittedData([...submittedData, state]);
+
+
+    console.log("submitted" ,submittedData)
 
     dispatch({
       type: "Update_form",
@@ -174,12 +211,15 @@ export function Form() {
         <Text mb="10px" mt={12} color="white" fontSize="60px">
           Fill out the form below to book your session
         </Text>
-        <FormControl
+
+        <form  onSubmit={updateForm}>
+
+        
+        <FormControl isRequired
           p="40px"
           border="2px solid white"
           w="80%"
           margin="auto"
-          isRequired
         >
           <FormLabel color="white" fontSize="50px">
             1. Location
@@ -197,6 +237,7 @@ export function Form() {
               onChange={(e) => {
                 dispatch({ type: "Update_location", payload: e.target.value });
               }}
+              required
             >
               <option value="">Select an Option</option>
               <option value="New York">New York</option>
@@ -215,6 +256,7 @@ export function Form() {
             onChange={(e) => {
               dispatch({ type: "UpdateAddress", payload: e.target.value });
             }}
+            required
           ></Textarea>
           <FormLabel color="white" mt={10} fontSize="50px">
             3. Treatement
@@ -232,10 +274,11 @@ export function Form() {
                   payload: e.target.value,
                 });
               }}
+              required
             >
               <option value="">Select an Option</option>
-              <option value="all">All Inclusive</option>
-              <option value="hydration">Hydration</option>
+              <option value="All Inclusive">All Inclusive</option>
+              <option value="Hydration">Hydration</option>
               <option value="Energy Lift">Energy Lift</option>
               <option value="Recovery">Recovery</option>
               <option value="Beauty">Beauty</option>
@@ -263,6 +306,7 @@ export function Form() {
               onChange={(e) => {
                 dispatch({ type: "Update_Booster", payload: e.target.value });
               }}
+              required
             >
               <option value="">Select an Option</option>
               <option value="B-complex">B-complex</option>
@@ -282,11 +326,12 @@ export function Form() {
             </Text>
             <Input
               color="white"
-              type="date"
+              type="datetime-local"
               value={state.schedule}
               onChange={(e) => {
                 dispatch({ type: "Update_schedule", payload: e.target.value });
               }}
+              required
             />
           </Box>
 
@@ -296,11 +341,14 @@ export function Form() {
             bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)"
             w="100%"
             mt={10}
-            onClick={updateForm}
+            type="submit"
+            
+           
           >
             Continue to Cart
           </Button>
         </FormControl>
+        </form>
       </Container>
       <Footer />
     </>

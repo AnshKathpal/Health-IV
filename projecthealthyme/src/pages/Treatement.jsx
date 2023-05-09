@@ -17,10 +17,12 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
-import AnchorLink from "react-anchor-link-smooth-scroll"
+import AnchorLink from "react-anchor-link-smooth-scroll";
 import IVImage from "../Images/IVImage.png";
 import Iphone from "../Images/Iphone.png";
+import TestKit from "../Images/TestKit.png";
 import Home from "../Images/Home.png";
+import CovidTest from "../Images/CovidTest.png";
 import Mobile from "../Images/Mobile1.jpg";
 import HomeTherapy from "../Images/HomeTherapy.png";
 import Logo from "../Images/logo.png";
@@ -29,6 +31,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
+import Homie from "../Images/Homie.png";
+import Phone from "../Images/Phone.png";
 
 export function Treatement({ text }) {
   const [data, setData] = useState([]);
@@ -65,6 +69,20 @@ export function Treatement({ text }) {
     getCities();
   }, []);
 
+  const handlewaitlist = (e) => {
+    e.preventDefault();
+    toast({
+      title: "Reigon Updated.",
+      description: "We wll try to reach you there soon",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+
+    setAddress("")
+    setEmail("")
+  };
+
   return (
     <>
       <Container
@@ -98,13 +116,12 @@ export function Treatement({ text }) {
         <Flex justifyContent="flex-end" width="40%" marginLeft="800px">
           <Box>
             <Link to="/form">
-            <Button mr={20}>Become a Member</Button>
+              <Button mr={20}>Become a Member</Button>
             </Link>
             <AnchorLink href="#container">
-
-            <Button bgGradient="linear( rgb(51,99,100), rgb(167,210,137))">
-              Book Session
-            </Button>
+              <Button bgGradient="linear( rgb(51,99,100), rgb(167,210,137))">
+                Book Session
+              </Button>
             </AnchorLink>
           </Box>
         </Flex>
@@ -123,16 +140,17 @@ export function Treatement({ text }) {
               </Text>
               <Image src={Iphone} width="100%" alt="Check" />
             </GridItem>
+            <GridItem w="100%" h="auto" mb={5}>
+              <Text fontSize="22px" color="white">
+                Add a Covid-19 test
+              </Text>
+              <Image src={TestKit} width="100%" alt="Check" />
+            </GridItem>
             <GridItem w="100%" h="auto">
               <Text fontSize="22px" color="white" mb={5}>
                 At Home Service
               </Text>
               <Image src={Home} width="100%" alt="Check" />
-            </GridItem>
-            <GridItem w="100%" h="auto" mb={5}>
-              <Text fontSize="22px" color="white">
-                Add a Covid-19 test
-              </Text>
             </GridItem>
           </Grid>
         </Box>
@@ -181,12 +199,11 @@ export function Treatement({ text }) {
                     $ {item.price}
                   </Text>
                   <Link to={`/booktreatement/${item.id}`}>
-                  <Button>
-                    {" "}
-                    <ArrowRightIcon />{" "}
-                  </Button>
+                    <Button>
+                      {" "}
+                      <ArrowRightIcon />{" "}
+                    </Button>
                   </Link>
-                  
                 </HStack>
                 {/* <Text color="white">{item.description}</Text> */}
               </GridItem>
@@ -205,28 +222,35 @@ export function Treatement({ text }) {
             are, we want to help you feel rejuvenated.
           </Text>
 
-          <Grid templateColumns="repeat(2, 1fr)" gap={40}>
+          <Grid
+            placeItems="center"
+            // border="1px solid white"
+            templateColumns="repeat(4, 1fr)"
+            gap={20}
+          >
             <GridItem w="100%" h="auto">
-              <Text fontSize="22px" color="white" mb={5}>
+              <Text fontSize="18px" color="white" mb={5}>
                 Book appointments easily on your phone.
               </Text>
-              <Image src={Mobile} width="100%" alt="Check" />
+              <Image src={Phone} width="100%" alt="Check" />
             </GridItem>
             <GridItem w="100%" h="auto">
-              <Text fontSize="22px" color="white" mb={5}>
+              <Text fontSize="18px" color="white" mb={5}>
                 Choose from a wide selection of revitalizing treatments.
               </Text>
-              <Image src={HomeTherapy} width="100%" alt="Check" />
+              <Image src={HomeTherapy} width="85%" alt="Check" />
             </GridItem>
             <GridItem w="100%" h="auto" mb={5}>
-              <Text fontSize="22px" color="white">
+              <Text fontSize="18px" color="white" mb={5}>
                 Include an at-home COVID test.
               </Text>
+              <Image src={CovidTest} width="80%" alt="Check" />
             </GridItem>
             <GridItem w="100%" h="auto" mb={5}>
-              <Text fontSize="22px" color="white">
+              <Text fontSize="18px" color="white">
                 Enjoy the benefits of IV therapy from the comfort of your home.
               </Text>
+              <Image ml={10} src={Homie} width="80%" alt="Check" />
             </GridItem>
           </Grid>
         </Box>
@@ -273,50 +297,54 @@ export function Treatement({ text }) {
             Don’t see your region on our list? We’ll let you know when our
             service area expands.
           </Text>
+          <form onSubmit={handlewaitlist}>
+            <FormControl required>
+              <FormLabel fontSize="20px" color="white">
+                Email Address
+              </FormLabel>
+              <Input
+                color="white"
+                mb="10px"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                required
+              />
+              <FormLabel fontSize="20px" color="white">
+                Address
+              </FormLabel>
+              <Input
+                color="white"
+                type="text"
+                value={address}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                required
+              />
 
-          <FormControl>
-            <FormLabel fontSize="20px" color="white">
-              Email Address
-            </FormLabel>
-            <Input
-              color="white"
-              mb="10px"
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-            <FormLabel fontSize="20px" color="white">
-              Address
-            </FormLabel>
-            <Input
-              color="white"
-              type="text"
-              value={address}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-            />
-
-            <Button
-              onClick={() =>
-                toast({
-                  title: "Reigon Updated.",
-                  description: "We wll try to reach you there soon",
-                  status: "success",
-                  duration: 2000,
-                  isClosable: true,
-                })
-              }
-              bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
-              mt={5}
-              width="100%"
-            >
-              {" "}
-              Submit{" "}
-            </Button>
-          </FormControl>
+              <Button
+                // onClick={() =>
+                //   toast({
+                //     title: "Reigon Updated.",
+                //     description: "We wll try to reach you there soon",
+                //     status: "success",
+                //     duration: 2000,
+                //     isClosable: true,
+                //   })
+                // }
+                type="submit"
+                bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
+                mt={5}
+                width="100%"
+              >
+                {" "}
+                Submit{" "}
+              </Button>
+            </FormControl>
+          </form>
         </Box>
       </Container>
 
@@ -346,9 +374,9 @@ export function Treatement({ text }) {
               Receive a credit towards any treatment under $500 each month.
             </Text>
             <Link to="/form">
-            <Button mt={10} color="white" bg="black">
-              Become a Member
-            </Button>
+              <Button mt={10} color="white" bg="black">
+                Become a Member
+              </Button>
             </Link>
           </Box>
         </Flex>
@@ -356,10 +384,7 @@ export function Treatement({ text }) {
 
       {/* <Container maxW="100%" h={400} bg="black"> */}
 
-
       <Footer />
-
-      
     </>
   );
 }

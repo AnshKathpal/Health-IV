@@ -1,4 +1,5 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useContext } from "react";
+import { Link } from "react-router-dom";
 import {
   Text,
   Container,
@@ -28,7 +29,10 @@ import {
   Stack,
   StackDivider,
   Image,
-  Card, CardHeader, CardBody, CardFooter 
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
 } from "@chakra-ui/react";
 import IVImage from "../Images/IVImage.png";
 import Iphone from "../Images/Iphone.png";
@@ -41,11 +45,52 @@ import { useEffect } from "react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 import { Footer } from "../Structure/Footer";
+import { AuthContext } from "../Context/AuthContextProvider";
 
-export function Cart(){
-    return (
-        <>
-        <Container
+export function Cart() {
+  const { submittedData, setSubmittedData, data, setData } =
+    useContext(AuthContext);
+
+  console.log("cart", submittedData);
+
+  const [cartData, setCartData] = useState([]);
+
+  const getCartData = () => {
+    return axios({
+      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`,
+      method: "GET",
+    }).then((res) => {
+      console.log(res.data);
+      setCartData(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getCartData();
+  }, []);
+
+  const deleteCartData = (id) => {
+    axios({
+      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart/${id}`,
+      method: "delete",
+    }).then(() => {
+      getCartData();
+    });
+  };
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    cartData.forEach((item) => {
+      totalPrice += +item.price;
+    });
+    return totalPrice;
+  };
+
+  console.log(cartData, "dataaa");
+
+  return (
+    <>
+      <Container
         maxW="100%"
         // border="1px solid White"
         bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)"
@@ -68,31 +113,120 @@ export function Cart(){
           <Text mt="20px" color="white" fontSize="30px">
             Review the details before continuing to checkout.
           </Text>
+
+          <Link to="/">
+            <Button
+              mt={20}
+              bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
+            >
+              Book More Sessions
+            </Button>
+          </Link>
         </Flex>
       </Container>
+      <Box width="100%" margin="auto" h="auto" bg="black">
+        {cartData.length > 0 &&
+          cartData.map((cartItem) => (
+            <Flex
+              justifyContent="normal"
+              alignItems="center"
+              border="1px solid White"
+              h="200px"
+              w="80%"
+              margin="auto"
+            >
+              <Box width="20%">
+                <Image margin="auto" h="190px" src={data.image} />
+              </Box>
+              <VStack
+                color="white"
+                spacing={25}
+                textAlign="left"
+                p="10px"
+                width="60%"
+              >
+                <Text>
+                  <b>Treatement :</b>
+                  {cartItem.treatement}
+                </Text>
+                <Text>
+                  <b>Add Booster :</b>
+                  {cartItem.addBooster}
+                </Text>
+                <Text>
+                  <b>Service Location :</b>
+                  {cartItem.location}
+                </Text>
+                <Text>
+                  <b>Booking Time :</b>
+                  {cartItem.schedule}
+                </Text>
+              </VStack>
+              <VStack color="white" width="33%">
+                <Text>Price : ${cartItem.price}</Text>
+                <Button
+                  onClick={() => deleteCartData(cartItem.id)}
+                  variant="outline"
+                  color="White"
+                >
+                  Cancel Appointment
+                </Button>
+              </VStack>
+            </Flex>
+          ))}
 
+        <Box
+          textAlign="left"
+          fontSize="50px"
+          p="30px"
+          margin="auto"
+          width="80%"
+        >
+          <Text color="white">Cart Total</Text>
+        </Box>
 
-      <Box border="1px solid red" width="80%" margin="auto" h="600px">
-<Flex justifyContent="normal" alignItems="center" border="1px solid black" h="200px">
-  <Box width="33%" border="1px solid red">
-    <Text>Image</Text>
-  </Box>
-  <Box textAlign="left" p="10px" width="60%" border="1px solid red">
-    <Text><b>Treatement :</b> </Text>
-    <Text><b>Add Booster :</b> </Text>
-    <Text><b>Service Location :</b> </Text>
-    <Text><b>Booking Time :</b> </Text>
-  </Box>
-  <Box width="33%" border="1px solid red">
-    <Text>
-      Price : 
-    </Text>
-  </Box>
+        <TableContainer width="80%" margin="auto">
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th color="white">SubTotal</Th>
+                <Th color="white">Service Charge</Th>
+                <Th color="white" isNumeric>
+                  Total Price
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td color="white">${calculateTotalPrice()}</Td>
+                <Td color="white">${50}</Td>
+                <Td color="white" isNumeric>
+                  ${calculateTotalPrice() + 50}
+                </Td>
+              </Tr>
+            </Tbody>
+            {/* <Tfoot>
+              <Tr>
+                <Th></Th>
+                <Th></Th>
+                <Th isNumeric color="white">
+                  multiply by
+                </Th>
+              </Tr>
+            </Tfoot> */}
+          </Table>
+        </TableContainer>
 
-</Flex>
+        <Button
+          w="200px"
+          bgGradient="linear( rgb(65,116,91), #2E5D67)"
+          mt="40px"
+        >
+          Checkout
+        </Button>
       </Box>
 
-
-        </>
-    )
-    }
+      <Footer />
+    </>
+  );
+}

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContextProvider";
 
 import {
   Modal,
@@ -31,6 +32,8 @@ function Login({ isLoggedIn }) {
     />
   );
 
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
@@ -53,22 +56,26 @@ function Login({ isLoggedIn }) {
       (user) => user.email === email && user.password === password
     );
     if (user) {
+      console.log("user", user);
       console.log("LoggedIn");
       isLoggedIn(user);
+      // login(user);
+      setIsAuth(true)
+
       await navigate("/");
     } else {
       console.log("error");
       setLoginStatus(false);
     }
-
-    
-
-
   };
 
-  useEffect(()=>{
-    handleSubmit() 
-  },[])
+  
+
+  useEffect(() => {
+    handleSubmit();
+  }, [isAuth]);
+
+  console.log(isAuth , "isAuth")
 
   return (
     <>
@@ -79,7 +86,7 @@ function Login({ isLoggedIn }) {
         bg="rgb(80,133,104)"
         variant="solid"
         boxShadow="base"
-        color = "white"
+        color="white"
         onClick={() => {
           setOverlay(<OverlayTwo />);
           onOpen();
@@ -100,6 +107,8 @@ function Login({ isLoggedIn }) {
           {/* <ModalFooter>
                 <Button onClick={onClose}>Close</Button>
               </ModalFooter> */}
+<form onSubmit={handleSubmit}>
+
 
           <FormControl bg="black" p={10} margin="auto">
             <FormLabel fontSize="20px" color="white">
@@ -133,19 +142,21 @@ function Login({ isLoggedIn }) {
             </InputRightElement> */}
             {/* <Input type = "submit" /> */}
             <Button
+            type="submit"
               bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
               mt={5}
               width="100%"
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
             >
               Login
             </Button>
 
-            <p bg="white">
-              If not an existing user <Link to="/signup">SignUp</Link>{" "}
-            </p>
+            <Text textAlign="center" color="white" mt="10px">
+              If not an existing user <Link to="/signup"><u>SignUp</u></Link>
+            </Text>
             {loginStatus == false ? <p color="white">Invalid</p> : null}
           </FormControl>
+          </form>
         </ModalContent>
       </Modal>
     </>
