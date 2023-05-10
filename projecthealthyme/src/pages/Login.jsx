@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContextProvider";
+import { useToast } from '@chakra-ui/react'
 
 import {
   Modal,
@@ -23,6 +24,10 @@ import React from "react";
 import { useEffect } from "react";
 
 function Login({ isLoggedIn }) {
+
+
+  const toast = useToast()
+
   const OverlayTwo = () => (
     <ModalOverlay
       bg="none"
@@ -32,13 +37,21 @@ function Login({ isLoggedIn }) {
     />
   );
 
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const { isAuth,setIsAuth,authState,setIsAuthState,loginUser } = useContext(AuthContext);
+
+
+  console.log("authstate" , authState.isAuth)
+  console.log("token" , authState.token)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState("");
+  const [loginStatus, setLoginStatus] = useState(false);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+console.log("checkLoginStatus",loginStatus)
+
+
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = React.useState(<OverlayTwo />);
@@ -56,16 +69,33 @@ function Login({ isLoggedIn }) {
       (user) => user.email === email && user.password === password
     );
     if (user) {
-      console.log("user", user);
+      // console.log("user", user);
       console.log("LoggedIn");
       isLoggedIn(user);
       // login(user);
-      setIsAuth(true)
+      // loginUser(true)
+      // setLoginStatus(true)
+      // console.log("checkLogin Status" , loginStatus)
+      console.log("nowAuth", authState.isAuth)
+      console.log("nowToken", authState.token)
+
+      toast({
+        title: 'Logged In',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      })
 
       await navigate("/");
     } else {
       console.log("error");
       setLoginStatus(false);
+      toast({
+        title: 'Wrong Credentials',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      })
     }
   };
 
@@ -73,9 +103,9 @@ function Login({ isLoggedIn }) {
 
   useEffect(() => {
     handleSubmit();
-  }, [isAuth]);
+  }, []);
 
-  console.log(isAuth , "isAuth")
+  // console.log(isAuth , "isAuth")
 
   return (
     <>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 import {
   Text,
   Container,
@@ -42,6 +41,8 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
 
+  const toast = useToast()
+
   const navigate = useNavigate();
   
 
@@ -74,9 +75,23 @@ function SignUp() {
         const savedUser = await response.json();
         console.log(savedUser);
         setUsers([...users, savedUser]);
+
+        toast({
+          title: 'Account Created - Kindly LogIn',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        })
+
         navigate("/");
       } else {
         console.error("Failed to save user");
+        toast({
+          title: 'Something went wrong',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
       }
     } catch (error) {
       console.error("Error:", error);

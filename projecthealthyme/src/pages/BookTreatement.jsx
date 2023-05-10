@@ -98,6 +98,8 @@ const reducer = (state, action) => {
 export function BookTreatement() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const toast = useToast()
+
 
   const navigate = useNavigate();
   // const [submittedData, setSubmittedData] = useState([]);
@@ -139,6 +141,13 @@ export function BookTreatement() {
         console.log(res);
         dispatch({
           type : "Update_form"
+        })
+
+        toast({
+          title: 'Added to the Cart',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
         })
 
         navigate("/cart")

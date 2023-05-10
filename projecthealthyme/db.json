@@ -48,6 +48,13 @@
       "password": "asdf123",
       "phoneNo": "5672537893",
       "id": 7
+    },
+    {
+      "name": "Ansh Kathpallllll",
+      "email": "checkagain@gmail.com",
+      "password": "asdf213",
+      "phoneNo": "123231",
+      "id": 8
     }
   ],
   "treatments": [
@@ -217,16 +224,43 @@
       "city": "Las Vegas"
     }
   ],
-  "cart": [
+  "cart": [],
+  "checkout": [
     {
-      "location": "Texas",
-      "address": "bvghcjsdcsd",
-      "treatement": "Energy Liftt",
-      "addBooster": "Gultathione",
-      "schedule": "2023-05-18T21:25",
-      "price": "129",
-      "image": "",
+      "firstname": "chscs",
+      "lastname": "bcjks",
+      "email": "cvhjcs@hjskd",
+      "address": "cjdsbkjds",
+      "phoneNo": "123456",
+      "country": "Texas",
+      "id": 1
+    },
+    {
+      "firstname": "vfvd",
+      "lastname": "csvsd",
+      "email": "vdsssc@gban",
+      "address": "sdkgvikvs",
+      "phoneNo": "2768112",
+      "country": "Florida",
+      "id": 2
+    },
+    {
+      "firstname": "dcncs",
+      "lastname": "scjs",
+      "email": "xhbjc@hdcjksc",
+      "address": "sdcjsbjhckc",
+      "phoneNo": "22323",
+      "country": "Texas",
       "id": 3
+    },
+    {
+      "firstname": "dcn msv",
+      "lastname": "csjcbs",
+      "email": "csdcw@cscs",
+      "address": "cscvdvdv",
+      "phoneNo": "32312",
+      "country": "Florida",
+      "id": 4
     }
   ]
 }

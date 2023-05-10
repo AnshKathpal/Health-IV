@@ -1,5 +1,5 @@
 import { useState, useReducer, useContext, useMemo } from "react";
-import Select from "react-select";
+
 import countryList from "react-select-country-list";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import {
@@ -18,6 +18,7 @@ import {
   Input,
   VStack,
   Textarea,
+  Select,
   Hr,
 } from "@chakra-ui/react";
 import IVImage from "../Images/IVImage.png";
@@ -32,16 +33,16 @@ import { ArrowRightIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
 import { Footer } from "../Structure/Footer";
 import { AuthContext } from "../Context/AuthContextProvider";
-
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   firstname: "",
   lastname: "",
-  email : "",
+  email: "",
   address: "",
-  phoneNo : "",
-  country : "",
-  
+  phoneNo: "",
+  country: "",
+
   // treatement: "",
   // addBooster: "",
   // schedule: "",
@@ -49,7 +50,55 @@ const initialState = {
   // image: "",
 };
 
-
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "Update_firstname": {
+      return {
+        ...state,
+        firstname: action.payload,
+      };
+    }
+    case "Update_lastname": {
+      return {
+        ...state,
+        lastname: action.payload,
+      };
+    }
+    case "Update_email": {
+      return {
+        ...state,
+        email: action.payload,
+      };
+    }
+    case "Update_address": {
+      return {
+        ...state,
+        address: action.payload,
+      };
+    }
+    case "Update_phoneNo": {
+      return {
+        ...state,
+        phoneNo: action.payload,
+      };
+    }
+    case "Update_form": {
+      return {
+        // ...state,
+        // cartItems : [...state.cartItems, action.payload]
+        ...initialState,
+      };
+    }
+    case "Update_country": {
+      return {
+        ...state,
+        country: action.payload,
+      };
+    }
+    default:
+      throw new Error(`actiontype ${action.type} not supported`);
+  }
+};
 
 export function Checkout() {
   const toast = useToast();
@@ -58,23 +107,55 @@ export function Checkout() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [country,setCountry] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+
+  const navigate = useNavigate();
 
   //   const [value, setValue] = useState("");
   //   const options = useMemo(() => countryList().getData(), []);
 
-  const [countries, setCountries] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState({});
+  const [checkOutData, setCheckOutData] = useState([]);
 
-  useEffect(() => {
-    fetch(
-      "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setCountries(data.countries);
-        setSelectedCountry(data.userSelectValue);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // const [countries, setCountries] = useState([]);
+  // const [selectedCountry, setSelectedCountry] = useState({});
+
+  // useEffect(() => {
+  //   fetch(
+  //     "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
+  //   )
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setCountries(data.countries);
+  //       setSelectedCountry(data.userSelectValue);
+  //     });
+  // }, []);
+
+  const handleForm = (e) => {
+    e.preventDefault();
+
+    console.log("state", state);
+    return axios({
+      method: "post",
+      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/checkout`,
+      data: state,
+    }).then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: "Update_form",
       });
-  }, []);
+
+      toast({
+        title: 'Booking Completed',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      })
+
+      navigate("/")
+    });
+  };
 
   //   const changeHandler = (value) => {
   //     setValue(value);
@@ -127,120 +208,161 @@ export function Checkout() {
             Billing Details
           </Text>
 
-          <FormControl isRequired>
-            <FormLabel fontSize="20px" color="white">
-              First Name
-            </FormLabel>
-            <Input color="white" mb="10px" type="text" />
-            <FormLabel fontSize="20px" color="white">
-              Last Name
-            </FormLabel>
-            <Input color="white" mb="10px" type="text" />
-
-            <FormLabel fontSize="20px" color="white">
-              Email Address
-            </FormLabel>
-            <Input
-              color="white"
-              mb="10px"
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-
-            <FormLabel fontSize="20px" color="white">
-              Phone Number
-            </FormLabel>
-            <Input color="white" type="text" />
-
-            <FormLabel fontSize="20px" color="white">
-              Address
-            </FormLabel>
-            <Textarea
-              color="white"
-              type="text"
-              value={address}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-            />
-            <FormLabel fontSize="20px" color="white">
-              Country
-            </FormLabel>
-            <Select
-              options={countries}
-              value={selectedCountry}
-              onChange={(selectedOption) => setSelectedCountry(selectedOption)}
-            />
-
-            <Box mt="40px">
+          <form onSubmit={handleForm}>
+            <FormControl isRequired>
               <FormLabel fontSize="20px" color="white">
-                Payment
-              </FormLabel>
-
-              <Flex justifyContent="flex-start" alignItems="center">
-                <Text color="white">Credit Card (Stripe)</Text>
-                <HStack ml="20px">
-                  <Image
-                    width="50px"
-                    src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                  ></Image>
-
-                  <Image
-                    width="50px"
-                    src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                  ></Image>
-
-                  <Image
-                    width="50px"
-                    src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                  ></Image>
-
-                  <Image
-                    width="50px"
-                    src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/discover.svg"
-                  ></Image>
-                </HStack>
-              </Flex>
-
-              <FormLabel fontSize="16px" color="white">
-                Card Number
+                First Name
               </FormLabel>
               <Input
+                value={state.firstname}
+                onChange={(e) => {
+                  dispatch({
+                    type: "Update_firstname",
+                    payload: e.target.value,
+                  });
+                }}
                 color="white"
-                placeholder="xxxx-xxxx-xxxx-xxxx"
+                mb="10px"
+                type="text"
+              />
+              <FormLabel fontSize="20px" color="white">
+                Last Name
+              </FormLabel>
+              <Input
+                value={state.lastname}
+                onChange={(e) => {
+                  dispatch({ type: "Update_lastname", payload: e.target.value });
+                }}
+                color="white"
+                mb="10px"
                 type="text"
               />
 
-              <FormLabel fontSize="16px" color="white">
-                Expiry Date
+              <FormLabel fontSize="20px" color="white">
+                Email Address
               </FormLabel>
-              <Input color="white" placeholder="MM / YY" type="text" />
-              <FormLabel fontSize="16px" color="white">
-                CVV
-              </FormLabel>
-              <Input color="white" placeholder="xxx" type="text" />
-            </Box>
+              <Input
+                color="white"
+                mb="10px"
+                type="email"
+                value={state.email}
+                onChange={(e) => {
+                  dispatch({ type: "Update_email", payload: e.target.value });
+                }}
+              />
 
-            <Button
-              onClick={() =>
-                toast({
-                  title: "Order Placed",
-                  description: "We wll try to reach you soon",
-                  status: "success",
-                  duration: 2000,
-                  isClosable: true,
-                })
-              }
-              bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
-              mt={5}
-              width="100%"
+              <FormLabel fontSize="20px" color="white">
+                Phone Number
+              </FormLabel>
+              <Input
+                value={state.phoneNo}
+                onChange={(e) => {
+                  dispatch({ type: "Update_phoneNo", payload: e.target.value });
+                }}
+                color="white"
+                type="text"
+              />
+
+              <FormLabel fontSize="20px" color="white">
+                Address
+              </FormLabel>
+              <Textarea
+                color="white"
+                type="text"
+                value={state.address}
+              onChange={(e) => {
+                dispatch({ type: "Update_address", payload: e.target.value });
+              }}
+              />
+
+<FormLabel fontSize="20px" color="white">
+                Country
+              </FormLabel>
+              <Select
+              color="white"
+              value={state.country}
+              onChange={(e) => {
+                dispatch({ type: "Update_country", payload: e.target.value });
+              }}
+              required
             >
-              Place Order
-            </Button>
-          </FormControl>
+              <option value="">Select an Option</option>
+              <option value="New York">New York</option>
+              <option value="Florida">Florida</option>
+              <option value="Texas">Texas</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="California">California</option>
+            </Select>
+              
+
+              <Box mt="40px">
+                <FormLabel fontSize="20px" color="white">
+                  Payment
+                </FormLabel>
+
+                <Flex justifyContent="flex-start" alignItems="center">
+                  <Text color="white">Credit Card (Stripe)</Text>
+                  <HStack ml="20px">
+                    <Image
+                      width="50px"
+                      src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                    ></Image>
+
+                    <Image
+                      width="50px"
+                      src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                    ></Image>
+
+                    <Image
+                      width="50px"
+                      src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                    ></Image>
+
+                    <Image
+                      width="50px"
+                      src="https://healthiv.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/discover.svg"
+                    ></Image>
+                  </HStack>
+                </Flex>
+
+                <FormLabel fontSize="16px" color="white">
+                  Card Number
+                </FormLabel>
+                <Input
+                  color="white"
+                  placeholder="xxxx-xxxx-xxxx-xxxx"
+                  type="text"
+                />
+
+                <FormLabel fontSize="16px" color="white">
+                  Expiry Date
+                </FormLabel>
+                <Input color="white" placeholder="MM / YY" type="text" />
+                <FormLabel fontSize="16px" color="white">
+                  CVV
+                </FormLabel>
+                <Input color="white" placeholder="xxx" type="text" />
+              </Box>
+
+              <Button
+                type="submit"
+                // onClick={() =>
+                //   toast({
+                //     title: "Order Placed",
+                //     description: "We wll try to reach you soon",
+                //     status: "success",
+                //     duration: 2000,
+                //     isClosable: true,
+                //   })
+                // }
+                bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
+                mt={5}
+                width="100%"
+              >
+                Place Order
+              </Button>
+            </FormControl>
+          </form>
         </Box>
       </Container>
       <Footer />
