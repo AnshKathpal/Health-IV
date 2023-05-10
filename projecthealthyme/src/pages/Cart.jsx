@@ -47,9 +47,18 @@ import { useToast } from "@chakra-ui/react";
 import { Footer } from "../Structure/Footer";
 import { AuthContext } from "../Context/AuthContextProvider";
 
+const url = `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`;
+
 export function Cart() {
   const { submittedData, setSubmittedData, data, setData } =
     useContext(AuthContext);
+
+  const [filterByCategory, setFilterByCategory] = useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [orderBy, setOrderBy] = useState("");
+  const [searchBy, setSearchBy] = useState("");
+
+  const toast = useToast();
 
   console.log("cart", submittedData);
 
@@ -57,7 +66,7 @@ export function Cart() {
 
   const getCartData = () => {
     return axios({
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`,
+      url: url,
       method: "GET",
     }).then((res) => {
       console.log(res.data);
@@ -66,8 +75,20 @@ export function Cart() {
   };
 
   useEffect(() => {
-    getCartData();
+    getCartData(url);
   }, []);
+
+  useEffect(() => {
+    if (filterByCategory != "all") {
+      getCartData(`${url}?category=${filterByCategory}`);
+    }
+  }, [filterByCategory]);
+
+  useEffect(() => {
+    console.log(sortBy)
+    console.log(orderBy)
+    getCartData(`${url}?_sort=${sortBy}&_order=${orderBy}`)
+  }, [sortBy,orderBy]);
 
   const deleteCartData = (id) => {
     axios({
@@ -75,6 +96,13 @@ export function Cart() {
       method: "delete",
     }).then(() => {
       getCartData();
+
+      toast({
+        title: "Booking Cancelled",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
     });
   };
 
@@ -124,9 +152,60 @@ export function Cart() {
           </Link>
         </Flex>
       </Container>
+
+      {/* <Flex color="white" bg="black" className="filter-options">
+        <Text>
+          Category:
+          <Select
+            className="filter-by-category"
+            value={filterByCategory}
+            onChange={(e) => {
+              setFilterByCategory(e.target.value);
+            }}
+          >
+            <option value="all">All Treatements</option>
+            <option value="All Inclusive">All Inclusive</option>
+            <option value="Hydration">Hydration</option>
+            <option value="Energy Lift">Energy Lift</option>
+            <option value="Recovery">Recovery</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Immune Boost">Immune Boost</option>
+            <option value="Weight Loss">Weight Loss</option>
+            <option value="Stomach Flu">Stomach Flu</option>
+            <option value="Hangover">Hangover</option>
+            <option value="Myers Cocktail">Myers Cocktail</option>
+          </Select>
+        </Text>
+        <Text>
+          Sort by:
+          <Select className="sort-by" value = {sortBy} onChange={(e) => setSortBy(e.target.value)}>
+            <option value="">Select an option</option>
+            <option value="schedule">Date & Time</option>
+            <option value="price">Price</option>
+            <option value="addBooster">addBooster</option>
+          </Select>
+        </Text>
+        <Text>
+          Order:
+          <Select className="order" value = {orderBy} onChange={(e) => setOrderBy(e.target.value)}>
+            <option value="">Select an option</option>
+            <option value="asc">Ascending Order</option>
+            <option value="desc">Descending Order</option>
+          </Select>
+        </Text>
+        <Text>
+          Search:
+          <Input />
+        </Text>
+      </Flex> */}
+
       <Box width="100%" margin="auto" h="auto" bg="black">
-        {cartData.length > 0 &&
-          cartData.map((cartItem) => (
+        {cartData.length == 0 ? (
+          <Flex fontSize="30px" justifyContent="center">
+            <Text color="white">Cart is Empty</Text>
+          </Flex>
+        ) : (
+          cartData?.map((cartItem) => (
             <Flex
               justifyContent="normal"
               alignItems="center"
@@ -173,39 +252,43 @@ export function Cart() {
                 </Button>
               </VStack>
             </Flex>
-          ))}
+          ))
+        )}
 
-        <Box
-          textAlign="left"
-          fontSize="50px"
-          p="30px"
-          margin="auto"
-          width="80%"
-        >
-          <Text color="white">Cart Total</Text>
-        </Box>
+        {cartData.length == 0 ? null : (
+          <Box
+            textAlign="left"
+            fontSize="50px"
+            p="30px"
+            margin="auto"
+            width="80%"
+          >
+            <Text color="white">Cart Total</Text>
+          </Box>
+        )}
 
-        <TableContainer width="80%" margin="auto">
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th color="white">SubTotal</Th>
-                <Th color="white">Service Charge</Th>
-                <Th color="white" isNumeric>
-                  Total Price
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td color="white">${calculateTotalPrice()}</Td>
-                <Td color="white">${50}</Td>
-                <Td color="white" isNumeric>
-                  ${calculateTotalPrice() + 50}
-                </Td>
-              </Tr>
-            </Tbody>
-            {/* <Tfoot>
+        {cartData.length == 0 ? null : (
+          <TableContainer width="80%" margin="auto">
+            <Table variant="simple">
+              <Thead>
+                <Tr>
+                  <Th color="white">SubTotal</Th>
+                  <Th color="white">Service Charge</Th>
+                  <Th color="white" isNumeric>
+                    Total Price
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td color="white">${calculateTotalPrice()}</Td>
+                  <Td color="white">${50}</Td>
+                  <Td color="white" isNumeric>
+                    ${calculateTotalPrice() + 50}
+                  </Td>
+                </Tr>
+              </Tbody>
+              {/* <Tfoot>
               <Tr>
                 <Th></Th>
                 <Th></Th>
@@ -214,16 +297,21 @@ export function Cart() {
                 </Th>
               </Tr>
             </Tfoot> */}
-          </Table>
-        </TableContainer>
+            </Table>
+          </TableContainer>
+        )}
 
-        <Button
-          w="200px"
-          bgGradient="linear( rgb(65,116,91), #2E5D67)"
-          mt="40px"
-        >
-          Checkout
-        </Button>
+        {cartData.length == 0 ? null : (
+          <Link to="/checkout">
+            <Button
+              w="200px"
+              bgGradient="linear( rgb(65,116,91), #2E5D67)"
+              mt="40px"
+            >
+              Checkout
+            </Button>
+          </Link>
+        )}
       </Box>
 
       <Footer />

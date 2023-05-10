@@ -8,6 +8,28 @@ const AuthContextProvider = ({children}) => {
 
     const [isAuth,setIsAuth] = useState(false);
 
+
+    const [authState,setIsAuthState] = useState({
+        isAuth : false,
+        token : false
+    })
+
+
+    const loginUser = () =>{
+        setIsAuthState ({
+            isAuth : true,
+            token : true
+        })
+    }
+
+
+    const logoutUser = () =>{
+        setIsAuthState({
+            isAuth : false,
+            token : false
+        })
+        }
+
     const [data,setData] = useState([]);
 
 
@@ -16,13 +38,19 @@ const AuthContextProvider = ({children}) => {
     //     setIsAuth(true);
     // }
 
+    // const logout = () => {
+    //     setIsAuth(false);
+    // }
+
+    
+
     const [submittedData, setSubmittedData] = useState([]);
 
 
 
 
     return (
-        <AuthContext.Provider value={{submittedData, setSubmittedData, isAuth, setIsAuth, data,setData}} >
+        <AuthContext.Provider value={{authState,loginUser,logoutUser,submittedData, setSubmittedData, isAuth, setIsAuth, data,setData}} >
             {children}
         </AuthContext.Provider>
     )

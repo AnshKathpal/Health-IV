@@ -11,6 +11,7 @@ import Login from "../pages/Login";
 import { Form } from "../pages/Form";
 import { BookTreatement } from "../pages/BookTreatement";
 import { Checkout } from "../pages/Checkout";
+import { Appointments } from "../pages/Appointments";
 
 
 export function AllRoutes() {
@@ -28,6 +29,7 @@ export function AllRoutes() {
       <Route path="/form" element={<Form />} />
       <Route path="/booktreatement/:id" element={<BookTreatement />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/appointments" element={<Appointments />} />
       
 
     </Routes>
