@@ -61,7 +61,7 @@ export function Appointments() {
 
   const getappointmentsData = () => {
     return axios({
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/checkout`,
+      url: `https://642537b39e0a30d92b2bb1bb.mockapi.io/checkout`,
       method: "GET",
     }).then((res) => {
       console.log("appointments", res.data);
@@ -75,7 +75,7 @@ export function Appointments() {
 
   const getCartData = () => {
     return axios({
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`,
+      url: `https://645d3ca0e01ac61058a06daf.mockapi.io/cart`,
       method: "GET",
     }).then((res) => {
       console.log("cart",res.data);
@@ -89,7 +89,7 @@ export function Appointments() {
 
   const deleteCartData = (id) => {
     axios({
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart/${id}`,
+      url: `https://645d3ca0e01ac61058a06daf.mockapi.io/cart/${id}`,
       method: "delete",
     }).then(() => {
       getCartData();

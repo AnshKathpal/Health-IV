@@ -1,6 +1,7 @@
 import { Navbar } from "../Components/Navbar";
 import { Footer } from "../Structure/Footer";
 import { Link } from "react-router-dom";
+import { extendTheme } from "@chakra-ui/react";
 import {
   Text,
   Container,
@@ -34,6 +35,16 @@ import { useToast } from "@chakra-ui/react";
 import Homie from "../Images/Homie.png";
 import Phone from "../Images/Phone.png";
 
+const breakpoints = {
+  sm: "320px",
+  md: "768px",
+  lg: "960px",
+  xl: "1200px",
+  "2xl": "1536px",
+};
+
+const theme = extendTheme({ breakpoints });
+
 export function Treatement({ text }) {
   const [data, setData] = useState([]);
   const [citiesData, setCitiesData] = useState([]);
@@ -44,7 +55,7 @@ export function Treatement({ text }) {
   const getTreatements = () => {
     return axios({
       method: "get",
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/treatments`,
+      url: `https://645d4803e01ac61058a174ca.mockapi.io/treatments`,
     }).then((res) => {
       console.log(res.data);
       setData(res.data);
@@ -58,7 +69,7 @@ export function Treatement({ text }) {
   const getCities = () => {
     return axios({
       method: "get",
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cities`,
+      url: `https://645d3ca0e01ac61058a06daf.mockapi.io/cities`,
     }).then((res) => {
       console.log("citiesData", res.data);
       setCitiesData(res.data);
@@ -79,47 +90,75 @@ export function Treatement({ text }) {
       isClosable: true,
     });
 
-    setAddress("")
-    setEmail("")
+    setAddress("");
+    setEmail("");
   };
 
   return (
     <>
       <Container
         maxW="100%"
-        // border="1px solid White"
+        // border="1px solid black"
         bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)"
       >
         <Flex>
           <Box
-            height="700px"
-            width="700px"
+            height={{ base: "100px", sm: "300px", md: "700px" }}
+            width={{ base: "100px", sm: "300px", md: "700px" }}
             // border="1px solid red"
-            marginLeft={500}
+            marginLeft={{ base: 100, sm: 240, md: 500 }}
           >
             <Image src={IVImage} width="100%" alt="Check" />
           </Box>
-          <Box mt={40} marginLeft={-967}>
-            <Text color="white" fontSize="250px">
+          <Box
+            mt={{ base: 10, sm: 20, md: 40 }}
+            marginLeft={{ base: "100px", sm: -465, md: -967 }}
+          >
+            <Text
+              color="white"
+              fontSize={{ base: 10, sm: "100px", md: "250px" }}
+            >
               Infusion
             </Text>
           </Box>
         </Flex>
         <Flex>
-          <Box mt={-80} marginLeft={600}>
-            <Text color="white" fontSize="250px">
+          <Box
+            mt={{ base: 10, sm: "-130px", md: -80 }}
+            marginLeft={{ base: "100px", sm: 223, md: 600 }}
+          >
+            <Text
+              color="white"
+              fontSize={{ base: 10, sm: "100px", md: "250px" }}
+            >
               Therapy
             </Text>
           </Box>
         </Flex>
 
-        <Flex justifyContent="flex-end" width="40%" marginLeft="800px">
+        <Flex
+          justifyContent="flex-end"
+          width={{ sm: "80%", md: "40%" }}
+          marginLeft={{ base: 10, sm: "100px", md: "800px" }}
+        >
           <Box>
             <Link to="/form">
-              <Button mr={20}>Become a Member</Button>
+              <Button
+                fontSize={{ sm: "10px", md: "15px" }}
+                width={{ sm: "100px", md: "180px" }}
+                height={{ sm: "30px", md: "40px" }}
+                mr={{ sm: 10, md: 20 }}
+              >
+                Become a Member
+              </Button>
             </Link>
             <AnchorLink href="#container">
-              <Button bgGradient="linear( rgb(51,99,100), rgb(167,210,137))">
+              <Button
+                fontSize={{ sm: "10px", md: "15px" }}
+                width={{ sm: "100px", md: "180px" }}
+                height={{ sm: "30px", md: "40px" }}
+                bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
+              >
                 Book Session
               </Button>
             </AnchorLink>
@@ -172,8 +211,12 @@ export function Treatement({ text }) {
         <Box className="mainContainer" id="container">
           <Grid
             // border="1px solid red"
-            templateColumns="repeat(4, 1fr)"
-            gap="40px"
+            templateColumns={{
+              base: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(4, 1fr)",
+            }}
+            gap={{ base: "20px", sm: "30px", md: "40px" }}
           >
             {data?.map((item) => (
               <GridItem

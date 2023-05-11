@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContextProvider";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
 
 import {
   Modal,
@@ -24,9 +24,7 @@ import React from "react";
 import { useEffect } from "react";
 
 function Login({ isLoggedIn }) {
-
-
-  const toast = useToast()
+  const toast = useToast();
 
   const OverlayTwo = () => (
     <ModalOverlay
@@ -37,11 +35,14 @@ function Login({ isLoggedIn }) {
     />
   );
 
-  const { isAuth,setIsAuth,authState,setIsAuthState,loginUser } = useContext(AuthContext);
+  const { isAuth, setIsAuth, authState, setIsAuthState, loginUser } =
+    useContext(AuthContext);
+
+  // console.log("authstate", authState.isAuth);
+  // console.log("token", authState.token);
 
 
-  console.log("authstate" , authState.isAuth)
-  console.log("token" , authState.token)
+  console.log("authLogin",isAuth)
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,9 +50,7 @@ function Login({ isLoggedIn }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-console.log("checkLoginStatus",loginStatus)
-
-
+  console.log("checkLoginStatus", loginStatus);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = React.useState(<OverlayTwo />);
@@ -59,7 +58,7 @@ console.log("checkLoginStatus",loginStatus)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let res = await fetch(`http://localhost:8080/users`);
+    let res = await fetch(`https://645d4803e01ac61058a174ca.mockapi.io/users`);
     let data = await res.json();
     console.log(data);
 
@@ -76,30 +75,30 @@ console.log("checkLoginStatus",loginStatus)
       // loginUser(true)
       // setLoginStatus(true)
       // console.log("checkLogin Status" , loginStatus)
-      console.log("nowAuth", authState.isAuth)
-      console.log("nowToken", authState.token)
+      // console.log("nowAuth", authState.isAuth);
+      // console.log("nowToken", authState.token);
+      setIsAuth(true);
+      console.log("authAfterLogin", isAuth)
 
       toast({
-        title: 'Logged In',
-        status: 'success',
+        title: "Logged In",
+        status: "success",
         duration: 2000,
         isClosable: true,
-      })
+      });
 
       await navigate("/");
     } else {
       console.log("error");
       setLoginStatus(false);
       toast({
-        title: 'Wrong Credentials',
-        status: 'error',
+        title: "Wrong Credentials",
+        status: "error",
         duration: 2000,
         isClosable: true,
-      })
+      });
     }
   };
-
-  
 
   useEffect(() => {
     handleSubmit();
@@ -137,55 +136,56 @@ console.log("checkLoginStatus",loginStatus)
           {/* <ModalFooter>
                 <Button onClick={onClose}>Close</Button>
               </ModalFooter> */}
-<form onSubmit={handleSubmit}>
-
-
-          <FormControl bg="black" p={10} margin="auto">
-            <FormLabel fontSize="20px" color="white">
-              Email
-            </FormLabel>
-            <Input
-              type="text"
-              name="username"
-              color="white"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-            <FormLabel fontSize="20px" color="white">
-              Password
-            </FormLabel>
-            <Input
-              type="password"
-              color="white"
-              name="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            {/* <InputRightElement width="4.5rem">
+          <form onSubmit={handleSubmit}>
+            <FormControl bg="black" p={10} margin="auto">
+              <FormLabel fontSize="20px" color="white">
+                Email
+              </FormLabel>
+              <Input
+                type="text"
+                name="username"
+                color="white"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <FormLabel fontSize="20px" color="white">
+                Password
+              </FormLabel>
+              <Input
+                type="password"
+                color="white"
+                name="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              {/* <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handleShowClick}>
                       {showPassword ? "Hide" : "Show"}
                     </Button>
             </InputRightElement> */}
-            {/* <Input type = "submit" /> */}
-            <Button
-            type="submit"
-              bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
-              mt={5}
-              width="100%"
-              // onClick={handleSubmit}
-            >
-              Login
-            </Button>
+              {/* <Input type = "submit" /> */}
+              <Button
+                type="submit"
+                bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
+                mt={5}
+                width="100%"
+                // onClick={handleSubmit}
+              >
+                Login
+              </Button>
 
-            <Text textAlign="center" color="white" mt="10px">
-              If not an existing user <Link to="/signup"><u>SignUp</u></Link>
-            </Text>
-            {loginStatus == false ? <p color="white">Invalid</p> : null}
-          </FormControl>
+              <Text textAlign="center" color="white" mt="10px">
+                If not an existing user{" "}
+                <Link to="/signup">
+                  <u>SignUp</u>
+                </Link>
+              </Text>
+              {loginStatus == false ? <p color="white">Invalid</p> : null}
+            </FormControl>
           </form>
         </ModalContent>
       </Modal>

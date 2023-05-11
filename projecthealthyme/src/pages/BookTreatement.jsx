@@ -98,8 +98,7 @@ const reducer = (state, action) => {
 export function BookTreatement() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const toast = useToast()
-
+  const toast = useToast();
 
   const navigate = useNavigate();
   // const [submittedData, setSubmittedData] = useState([]);
@@ -113,16 +112,15 @@ export function BookTreatement() {
   // const [data,setData] = useState([]);
 
   const fetchData = async () => {
+    let res = await fetch(`https://645d4803e01ac61058a174ca.mockapi.io/treatments/${id}`);
 
 
+    console.log("response", res)
 
-    let res = await fetch(
-      `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/treatments/${id}`
-    );
     let data = await res.json();
     // let fetchedData = await data.products;
     setData(data);
-    console.log(data);
+    console.log("data",data);
   };
 
   useEffect(() => {
@@ -132,32 +130,26 @@ export function BookTreatement() {
   const updateForm = (e) => {
     e.preventDefault();
 
-    console.log("state",state)
-      return axios({
-        method: "post",
-        url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`,
-        data: state,
-      }).then((res)=>{
-        console.log(res);
-        dispatch({
-          type : "Update_form"
-        })
+    console.log("state", state);
+    return axios({
+      method: "post",
+      url: `https://645d3ca0e01ac61058a06daf.mockapi.io/cart`,
+      data: state,
+    }).then((res) => {
+      console.log(res);
+      dispatch({
+        type: "Update_form",
+      });
 
-        toast({
-          title: 'Added to the Cart',
-          status: 'success',
-          duration: 2000,
-          isClosable: true,
-        })
+      toast({
+        title: "Added to the Cart",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
 
-        navigate("/cart")
-      })
-
-     
-
-
-
-
+      navigate("/cart");
+    });
 
     // setSubmittedData([...submittedData, state]);
 
@@ -212,146 +204,150 @@ export function BookTreatement() {
           Fill out the form below to book your session
         </Text>
 
-<form  onSubmit={updateForm}>
-
-        <FormControl
-          p="40px"
-          border="2px solid white"
-          w="80%"
-          margin="auto"
-          isRequired
-        >
-          <FormLabel color="white" fontSize="50px">
-            1. Location
-          </FormLabel>
-          <Text color="white" textAlign="left" fontSize="20px">
-            We come to you. Let’s make sure you’re in our service area.
-          </Text>
-          <Box mt={17}>
-            <Text color="white" textAlign="left" fontSize="20px">
-              Service Location
-            </Text>
-            <Select
-              color="white"
-              value={state.location}
-              onChange={(e) => {
-                dispatch({ type: "Update_location", payload: e.target.value });
-              }}
-              required
-            >
-              <option value="">Select an Option</option>
-              <option value="New York">New York</option>
-              <option value="Florida">Florida</option>
-              <option value="Texas">Texas</option>
-              <option value="Los Angeles">Los Angeles</option>
-              <option value="California">California</option>
-            </Select>
-          </Box>
-          <FormLabel color="white" mt={10} fontSize="50px">
-            2. Address
-          </FormLabel>
-          <Textarea
-            color="white"
-            value={state.address}
-            onChange={(e) => {
-              dispatch({ type: "UpdateAddress", payload: e.target.value });
-            }}
-            required
-          ></Textarea>
-          <FormLabel color="white" mt={10} fontSize="50px">
-            3. Treatement
-          </FormLabel>
-          <Box mt={17}>
-            <Text color="white" textAlign="left" fontSize="20px">
-              First Month's Treatement
-            </Text>
-            <Input
-              color="white"
-              value={data.title}
-              onChange={(e) => {
-                dispatch({
-                  type: "Update_treatement",
-                  payload: e.target.value,
-                });
-              }}
-              required
-            />
-          </Box>
-          <FormLabel color="white" mt={10} fontSize="50px">
-            4. Add-On's
-          </FormLabel>
-          <Text color="white" textAlign="left" fontSize="20px">
-            Upgrade your treatment with an IV booster supplement or a COVID
-            test.
-          </Text>
-          <Box mt={17}>
-            <Text color="white" textAlign="left" fontSize="20px">
-              Add Booster
-            </Text>
-            <Select
-              color="white"
-              value={state.addBooster}
-              onChange={(e) => {
-                dispatch({ type: "Update_Booster", payload: e.target.value });
-              }}
-              required
-            >
-              <option value="">Select an Option</option>
-              <option value="B-complex">B-complex</option>
-              <option value="Gultathione">Gultathione</option>
-              <option value="Zinc">Zinc</option>
-              <option value="Vitamin B-12">Vitamin B-12</option>
-              <option value="Biotin">Biotin</option>
-            </Select>
-          </Box>
-
-          <FormLabel color="white" mt={10} fontSize="50px">
-            4. Schedule
-          </FormLabel>
-          <Box mt={17}>
-            <Text color="white" textAlign="left" fontSize="20px">
-              Select a time for your hour long session.
-            </Text>
-            <Input
-              color="white"
-              type="datetime-local"
-              value={state.schedule}
-              onChange={(e) => {
-                dispatch({ type: "Update_schedule", payload: e.target.value });
-              }}
-              required
-            />
-          </Box>
-
-          <FormLabel color="white" mt={10} fontSize="50px">
-            5. Price
-          </FormLabel>
-          <Box mt={17}>
-            <Input
-              color="white"
-              value={data.price}
-              onChange={(e) => {
-                dispatch({
-                  type: "Update_price",
-                  payload: data.price,
-                });
-              }}
-              required
-            />
-          </Box>
-
-          <Button
-            fontSize="20px"
-            color="white"
-            bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)"
-            w="100%"
-            mt={10}
-            type="submit"
-           
+        <form onSubmit={updateForm}>
+          <FormControl
+            p="40px"
+            border="2px solid white"
+            w="80%"
+            margin="auto"
+            isRequired
           >
-            Continue to Cart
-          </Button>
-        </FormControl>
+            <FormLabel color="white" fontSize="50px">
+              1. Location
+            </FormLabel>
+            <Text color="white" textAlign="left" fontSize="20px">
+              We come to you. Let’s make sure you’re in our service area.
+            </Text>
+            <Box mt={17}>
+              <Text color="white" textAlign="left" fontSize="20px">
+                Service Location
+              </Text>
+              <Select
+                color="white"
+                value={state.location}
+                onChange={(e) => {
+                  dispatch({
+                    type: "Update_location",
+                    payload: e.target.value,
+                  });
+                }}
+                required
+              >
+                <option value="">Select an Option</option>
+                <option value="New York">New York</option>
+                <option value="Florida">Florida</option>
+                <option value="Texas">Texas</option>
+                <option value="Los Angeles">Los Angeles</option>
+                <option value="California">California</option>
+              </Select>
+            </Box>
+            <FormLabel color="white" mt={10} fontSize="50px">
+              2. Address
+            </FormLabel>
+            <Textarea
+              color="white"
+              value={state.address}
+              onChange={(e) => {
+                dispatch({ type: "UpdateAddress", payload: e.target.value });
+              }}
+              required
+            ></Textarea>
+            <FormLabel color="white" mt={10} fontSize="50px">
+              3. Treatement
+            </FormLabel>
+            <Box mt={17}>
+              <Text color="white" textAlign="left" fontSize="20px">
+                First Month's Treatement
+              </Text>
+              <Input
+                color="white"
+                value={data.title}
+                onChange={(e) => {
+                  dispatch({
+                    type: "Update_treatement",
+                    payload: e.target.value,
+                  });
+                }}
+                required
+              />
+            </Box>
+            <FormLabel color="white" mt={10} fontSize="50px">
+              4. Add-On's
+            </FormLabel>
+            <Text color="white" textAlign="left" fontSize="20px">
+              Upgrade your treatment with an IV booster supplement or a COVID
+              test.
+            </Text>
+            <Box mt={17}>
+              <Text color="white" textAlign="left" fontSize="20px">
+                Add Booster
+              </Text>
+              <Select
+                color="white"
+                value={state.addBooster}
+                onChange={(e) => {
+                  dispatch({ type: "Update_Booster", payload: e.target.value });
+                }}
+                required
+              >
+                <option value="">Select an Option</option>
+                <option value="B-complex">B-complex</option>
+                <option value="Gultathione">Gultathione</option>
+                <option value="Zinc">Zinc</option>
+                <option value="Vitamin B-12">Vitamin B-12</option>
+                <option value="Biotin">Biotin</option>
+              </Select>
+            </Box>
+
+            <FormLabel color="white" mt={10} fontSize="50px">
+              4. Schedule
+            </FormLabel>
+            <Box mt={17}>
+              <Text color="white" textAlign="left" fontSize="20px">
+                Select a time for your hour long session.
+              </Text>
+              <Input
+                color="white"
+                type="datetime-local"
+                value={state.schedule}
+                onChange={(e) => {
+                  dispatch({
+                    type: "Update_schedule",
+                    payload: e.target.value,
+                  });
+                }}
+                required
+              />
+            </Box>
+
+            <FormLabel color="white" mt={10} fontSize="50px">
+              5. Price
+            </FormLabel>
+            <Box mt={17}>
+              <Input
+                color="white"
+                value={data.price}
+                onChange={(e) => {
+                  dispatch({
+                    type: "Update_price",
+                    payload: data.price,
+                  });
+                }}
+                required
+              />
+            </Box>
+
+            <Button
+              fontSize="20px"
+              color="white"
+              bgGradient="linear( rgb(65,116,91), #2E5D67, #000000)"
+              w="100%"
+              mt={10}
+              type="submit"
+            >
+              Continue to Cart
+            </Button>
+          </FormControl>
         </form>
       </Container>
       <Footer />

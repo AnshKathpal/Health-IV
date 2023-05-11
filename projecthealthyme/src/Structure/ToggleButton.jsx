@@ -20,7 +20,8 @@ export function ToggleButton(loginStatus, userData) {
 
   console.log("status",loginStatus)
 
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const { isAuth, setIsAuth, logout, authState, setIsAuthState, loginUser } =
+  useContext(AuthContext);
 
 
   console.log("isAuth", isAuth)
@@ -59,7 +60,7 @@ export function ToggleButton(loginStatus, userData) {
               variant="solid"
               boxShadow="base"
               w="100%"
-              onClick={() => setIsAuth(false)}
+              onClick={logout}
             >
               Logout
             </Button>

@@ -60,7 +60,7 @@ function SignUp() {
     try {
       // Make a POST request to the API to save the user
       const response = await fetch(
-        `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/users`,
+        `https://645d4803e01ac61058a174ca.mockapi.io/users`,
         {
           method: "POST",
           headers: {
