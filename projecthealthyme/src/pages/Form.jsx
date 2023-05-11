@@ -113,7 +113,7 @@ export function Form() {
     console.log("state",state)
       return axios({
         method: "post",
-        url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`,
+        url: `https://645d3ca0e01ac61058a06daf.mockapi.io/cart`,
         data: state,
       }).then((res)=>{
         console.log(res);

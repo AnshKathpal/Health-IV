@@ -47,7 +47,7 @@ import { useToast } from "@chakra-ui/react";
 import { Footer } from "../Structure/Footer";
 import { AuthContext } from "../Context/AuthContextProvider";
 
-const url = `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart`;
+const url = `https://645d3ca0e01ac61058a06daf.mockapi.io/cart`;
 
 export function Cart() {
   const { submittedData, setSubmittedData, data, setData } =
@@ -92,7 +92,7 @@ export function Cart() {
 
   const deleteCartData = (id) => {
     axios({
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/cart/${id}`,
+      url: `https://645d3ca0e01ac61058a06daf.mockapi.io/cart/${id}`,
       method: "delete",
     }).then(() => {
       getCartData();

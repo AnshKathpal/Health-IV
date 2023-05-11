@@ -138,7 +138,7 @@ export function Checkout() {
     console.log("state", state);
     return axios({
       method: "post",
-      url: `http://localhost:${process.env.REACT_APP_JSON_SERVER_PORT}/checkout`,
+      url: `https://642537b39e0a30d92b2bb1bb.mockapi.io/checkout`,
       data: state,
     }).then((res) => {
       console.log(res.data);
@@ -214,6 +214,7 @@ export function Checkout() {
                 First Name
               </FormLabel>
               <Input
+              required
                 value={state.firstname}
                 onChange={(e) => {
                   dispatch({
@@ -229,6 +230,7 @@ export function Checkout() {
                 Last Name
               </FormLabel>
               <Input
+              required
                 value={state.lastname}
                 onChange={(e) => {
                   dispatch({ type: "Update_lastname", payload: e.target.value });
@@ -242,6 +244,7 @@ export function Checkout() {
                 Email Address
               </FormLabel>
               <Input
+              required
                 color="white"
                 mb="10px"
                 type="email"
@@ -255,6 +258,7 @@ export function Checkout() {
                 Phone Number
               </FormLabel>
               <Input
+              required
                 value={state.phoneNo}
                 onChange={(e) => {
                   dispatch({ type: "Update_phoneNo", payload: e.target.value });
@@ -267,6 +271,7 @@ export function Checkout() {
                 Address
               </FormLabel>
               <Textarea
+              required
                 color="white"
                 type="text"
                 value={state.address}
@@ -329,6 +334,7 @@ export function Checkout() {
                   Card Number
                 </FormLabel>
                 <Input
+                required
                   color="white"
                   placeholder="xxxx-xxxx-xxxx-xxxx"
                   type="text"
@@ -337,11 +343,11 @@ export function Checkout() {
                 <FormLabel fontSize="16px" color="white">
                   Expiry Date
                 </FormLabel>
-                <Input color="white" placeholder="MM / YY" type="text" />
+                <Input required color="white" placeholder="MM / YY" type="text" />
                 <FormLabel fontSize="16px" color="white">
                   CVV
                 </FormLabel>
-                <Input color="white" placeholder="xxx" type="text" />
+                <Input required color="white" placeholder="xxx" type="text" />
               </Box>
 
               <Button

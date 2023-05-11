@@ -12,7 +12,7 @@ import { Form } from "../pages/Form";
 import { BookTreatement } from "../pages/BookTreatement";
 import { Checkout } from "../pages/Checkout";
 import { Appointments } from "../pages/Appointments";
-
+import { PrivateRoute } from "./PrivateRoute";
 
 export function AllRoutes() {
   return (
@@ -20,18 +20,44 @@ export function AllRoutes() {
       <Route path="/" element={<Treatement />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/blogs" element={<Blogs />} />
-      <Route path="/cart" element={<Cart />} />
+      <Route
+        path="/cart"
+        element={
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        }
+      />
       <Route path="/contact" element={<Contact />} />
       <Route path="/pressarticles" element={<Press />} />
       <Route path="*" element={<NotFound />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/form" element={<Form />} />
-      <Route path="/booktreatement/:id" element={<BookTreatement />} />
+      <Route
+        path="/form"
+        element={
+          <PrivateRoute>
+            <Form />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/booktreatement/:id"
+        element={
+          <PrivateRoute>
+            <BookTreatement />
+          </PrivateRoute>
+        }
+      />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/appointments" element={<Appointments />} />
-      
+      <Route
+        path="/appointments"
+        element={
 
+            <Appointments />
+
+        }
+      />
     </Routes>
   );
 }

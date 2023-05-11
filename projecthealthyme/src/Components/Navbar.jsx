@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+
 import {
   Flex,
   Spacer,
@@ -68,6 +69,7 @@ export function Navbar() {
       w="100%"
       p={4}
       color="black"
+      display={{sm:"none", md:"block"}}
     >
       <Flex minWidth="max-content" alignItems="center" gap="2">
         <Box p="2">

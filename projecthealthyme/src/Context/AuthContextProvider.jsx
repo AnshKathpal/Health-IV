@@ -15,20 +15,25 @@ const AuthContextProvider = ({children}) => {
     })
 
 
-    const loginUser = () =>{
-        setIsAuthState ({
-            isAuth : true,
-            token : true
-        })
-    }
+    // const loginUser = () =>{
+    //     setIsAuthState ({
+    //         isAuth : true,
+    //         token : true
+    //     })
+    // }
 
 
-    const logoutUser = () =>{
-        setIsAuthState({
-            isAuth : false,
-            token : false
-        })
-        }
+    // const logoutUser = () =>{
+    //     setIsAuthState({
+    //         isAuth : false,
+    //         token : false
+    //     })
+    //     }
+
+    const logout = () =>{
+        setIsAuth(false)
+      }
+
 
     const [data,setData] = useState([]);
 
@@ -50,7 +55,7 @@ const AuthContextProvider = ({children}) => {
 
 
     return (
-        <AuthContext.Provider value={{authState,loginUser,logoutUser,submittedData, setSubmittedData, isAuth, setIsAuth, data,setData}} >
+        <AuthContext.Provider value={{authState,logout,submittedData, setSubmittedData, isAuth, setIsAuth, data,setData}} >
             {children}
         </AuthContext.Provider>
     )
