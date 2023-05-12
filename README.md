@@ -48,5 +48,42 @@ Json Server
 
 <img width="1680" alt="Screenshot 2023-05-13 at 4 21 01 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/e07f2075-3054-4b0a-aaf8-32d1d639ccc6">
 
+## Book-Treatement Page
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 24 42 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/8377f402-4281-41c3-bbdf-ce38faa0c23a">
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 24 47 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/1527bc32-e784-4bee-a4ec-2df14b9d78cc">
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 24 54 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/0d0e50ff-4e20-4b9c-a543-c65dd1b324df">
+
+## Cart Page
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 25 40 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/3a235b56-c1a1-49d5-92f2-e544b2101933">
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 25 44 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/2a04c3c0-a235-4f54-ae68-0dcd9ec57add">
+
+## Blogs Page
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 22 39 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/c7dde0bb-46bb-4b71-9281-2c0152e31fd6">
+
+## About Page
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 23 18 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/b35ab402-0112-4cae-b461-663207af2fae">
+
+## Contact Page
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 23 45 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/70320610-c0b9-428c-a3cb-96419c7c835b">
+
+## Checkout Page
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 26 25 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/bb9b0ccd-c2a8-4a78-843f-eedd2ae0b3fe">
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 26 32 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/b9c2de7a-40ca-43d4-95b3-d002f86c7ca5">
+
+## Booked Appointments Page
+
+<img width="1680" alt="Screenshot 2023-05-13 at 4 27 59 AM" src="https://github.com/AnshKathpal/righteous-pet-2621/assets/115460552/2b483053-a495-443a-93e4-071a99c56cda">
+
+
 
 
