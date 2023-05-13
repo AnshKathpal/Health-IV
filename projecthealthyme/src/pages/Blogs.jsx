@@ -74,7 +74,7 @@ export function Blogs() {
           </Box>
           <Text color="white" fontSize="50px">
             Why the “f” word is the most important word in weight management
-            <Button ml="30px" variant="outline">
+            <Button ml="30px" variant="outline" _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}>
               Read More
             </Button>
           </Text>
@@ -92,7 +92,7 @@ export function Blogs() {
           </Box>
           <Text color="white" fontSize="50px">
           Big ways digital healthcare is changing how and where you access care
-            <Button ml="30px" variant="outline">
+            <Button _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}} ml="30px" variant="outline">
               Read More
             </Button>
           </Text>
@@ -163,7 +163,7 @@ export function Blogs() {
           </Box>
           <Text color="white" fontSize="50px">
           Why Covid-19 testing and contact tracing is essential for businesses
-            <Button ml="30px" variant="outline">
+            <Button _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}} ml="30px" variant="outline">
               Read More
             </Button>
           </Text>

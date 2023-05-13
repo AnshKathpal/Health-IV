@@ -144,6 +144,7 @@ export function Cart() {
 
           <Link to="/">
             <Button
+            _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
               mt={20}
               bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
             >
@@ -244,6 +245,7 @@ export function Cart() {
               <VStack color="white" width="33%">
                 <Text>Price : ${cartItem.price}</Text>
                 <Button
+                _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
                   onClick={() => deleteCartData(cartItem.id)}
                   variant="outline"
                   color="White"
@@ -304,6 +306,7 @@ export function Cart() {
         {cartData.length == 0 ? null : (
           <Link to="/checkout">
             <Button
+            _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
               w="200px"
               bgGradient="linear( rgb(65,116,91), #2E5D67)"
               mt="40px"

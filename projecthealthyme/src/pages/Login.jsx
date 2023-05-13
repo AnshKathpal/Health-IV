@@ -120,6 +120,7 @@ function Login({ isLoggedIn }) {
           setOverlay(<OverlayTwo />);
           onOpen();
         }}
+        _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
       >
         Login
       </Button>
@@ -173,6 +174,7 @@ function Login({ isLoggedIn }) {
                 bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
                 mt={5}
                 width="100%"
+                _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
                 // onClick={handleSubmit}
               >
                 Login

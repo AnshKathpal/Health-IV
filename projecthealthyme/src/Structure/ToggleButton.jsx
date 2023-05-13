@@ -38,6 +38,7 @@ export function ToggleButton(loginStatus, userData) {
           boxShadow="base"
           userData={loginStatus}
           as={Button}
+          _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
           //   rightIcon={<ChevronDownIcon />}
         >
           {check.name}

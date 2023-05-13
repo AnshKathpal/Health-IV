@@ -1,5 +1,9 @@
 import { Box } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+import { ThemeContext } from "../Context/CustomThemeProvider"
+import { useContext } from "react";
+import {SunIcon } from '@chakra-ui/icons'
+
 
 import {
   Flex,
@@ -52,6 +56,8 @@ const links = [
 export function Navbar() {
   const [loginStatus, setLoginStatus] = useState(false);
 
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
   console.log(loginStatus);
 
   const defaultStyle = {
@@ -79,7 +85,7 @@ export function Navbar() {
           </Link>
         </Box>
         <Spacer />
-        <ButtonGroup>
+        <ButtonGroup >
           {links.map((item) => {
             return (
               <NavLink
@@ -95,6 +101,7 @@ export function Navbar() {
                   bg="rgb(80,133,104)"
                   variant="solid"
                   boxShadow="base"
+                  _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
                 >
                   {item.title}
                 </Button>
@@ -118,11 +125,28 @@ export function Navbar() {
             //   {loginStatus.name}
             // </Button>
 
-            <ToggleButton userData={loginStatus}  isLoggedIn={(e) => setLoginStatus(e)} />
+            <ToggleButton  userData={loginStatus}  isLoggedIn={(e) => setLoginStatus(e)} />
           ) : (
             // <h1 userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)}>{loginStatus.name}</h1>
             <Login isLoggedIn={(e) => setLoginStatus(e)} />
           )}
+
+<SunIcon
+w="50px"
+h="50px"
+ fontSize="12px"
+ p={6}
+        onClick={toggleTheme}
+        style={{
+          // border: theme == "dark" ? "solid white" : "pink",
+          color: theme == "dark" ? "black" : "white",
+          background: theme == "dark" ? "rgb(65,116,91)" : "rgb(65,116,91)",
+          padding : "5px"
+        }}
+      >
+        Change Theme
+      </SunIcon>
+
         </ButtonGroup>
       </Flex>
     </Box>

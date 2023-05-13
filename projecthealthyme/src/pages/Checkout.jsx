@@ -20,6 +20,8 @@ import {
   Textarea,
   Select,
   Hr,
+  PinInput,
+  PinInputField,
 } from "@chakra-ui/react";
 import IVImage from "../Images/IVImage.png";
 import Iphone from "../Images/Iphone.png";
@@ -106,7 +108,7 @@ export function Checkout() {
   const [address, setAddress] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [country,setCountry] = useState("");
+  const [country, setCountry] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
 
   const navigate = useNavigate();
@@ -147,13 +149,13 @@ export function Checkout() {
       });
 
       toast({
-        title: 'Booking Completed',
-        status: 'success',
+        title: "Booking Completed",
+        status: "success",
         duration: 2000,
         isClosable: true,
-      })
+      });
 
-      navigate("/")
+      navigate("/");
     });
   };
 
@@ -175,6 +177,18 @@ export function Checkout() {
   //     //   fontSize: state.selectProps.myFontSize
   //     })
   //   };
+
+  const generateRandomNumber = () => {
+    const randomNumber = Math.floor(Math.random() * 9000) + 1000;
+    toast({
+      title: "Your OTP",
+      description: randomNumber.toString(),
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+      position: "top"
+    });
+  };
 
   return (
     <>
@@ -214,7 +228,7 @@ export function Checkout() {
                 First Name
               </FormLabel>
               <Input
-              required
+                required
                 value={state.firstname}
                 onChange={(e) => {
                   dispatch({
@@ -230,10 +244,13 @@ export function Checkout() {
                 Last Name
               </FormLabel>
               <Input
-              required
+                required
                 value={state.lastname}
                 onChange={(e) => {
-                  dispatch({ type: "Update_lastname", payload: e.target.value });
+                  dispatch({
+                    type: "Update_lastname",
+                    payload: e.target.value,
+                  });
                 }}
                 color="white"
                 mb="10px"
@@ -244,7 +261,7 @@ export function Checkout() {
                 Email Address
               </FormLabel>
               <Input
-              required
+                required
                 color="white"
                 mb="10px"
                 type="email"
@@ -258,7 +275,7 @@ export function Checkout() {
                 Phone Number
               </FormLabel>
               <Input
-              required
+                required
                 value={state.phoneNo}
                 onChange={(e) => {
                   dispatch({ type: "Update_phoneNo", payload: e.target.value });
@@ -271,34 +288,33 @@ export function Checkout() {
                 Address
               </FormLabel>
               <Textarea
-              required
+                required
                 color="white"
                 type="text"
                 value={state.address}
-              onChange={(e) => {
-                dispatch({ type: "Update_address", payload: e.target.value });
-              }}
+                onChange={(e) => {
+                  dispatch({ type: "Update_address", payload: e.target.value });
+                }}
               />
 
-<FormLabel fontSize="20px" color="white">
+              <FormLabel fontSize="20px" color="white">
                 Country
               </FormLabel>
               <Select
-              color="white"
-              value={state.country}
-              onChange={(e) => {
-                dispatch({ type: "Update_country", payload: e.target.value });
-              }}
-              required
-            >
-              <option value="">Select an Option</option>
-              <option value="New York">New York</option>
-              <option value="Florida">Florida</option>
-              <option value="Texas">Texas</option>
-              <option value="Los Angeles">Los Angeles</option>
-              <option value="California">California</option>
-            </Select>
-              
+                color="white"
+                value={state.country}
+                onChange={(e) => {
+                  dispatch({ type: "Update_country", payload: e.target.value });
+                }}
+                required
+              >
+                <option value="">Select an Option</option>
+                <option value="New York">New York</option>
+                <option value="Florida">Florida</option>
+                <option value="Texas">Texas</option>
+                <option value="Los Angeles">Los Angeles</option>
+                <option value="California">California</option>
+              </Select>
 
               <Box mt="40px">
                 <FormLabel fontSize="20px" color="white">
@@ -334,7 +350,7 @@ export function Checkout() {
                   Card Number
                 </FormLabel>
                 <Input
-                required
+                  required
                   color="white"
                   placeholder="xxxx-xxxx-xxxx-xxxx"
                   type="text"
@@ -343,12 +359,31 @@ export function Checkout() {
                 <FormLabel fontSize="16px" color="white">
                   Expiry Date
                 </FormLabel>
-                <Input required color="white" placeholder="MM / YY" type="text" />
+                <Input
+                  required
+                  color="white"
+                  placeholder="MM / YY"
+                  type="text"
+                />
                 <FormLabel fontSize="16px" color="white">
                   CVV
                 </FormLabel>
                 <Input required color="white" placeholder="xxx" type="text" />
               </Box>
+
+              <FormLabel fontSize="16px" color="white">
+                Enter OTP
+              </FormLabel>
+
+              <HStack color="white">
+                <PinInput>
+                  <PinInputField required />
+                  <PinInputField required />
+                  <PinInputField required />
+                  <PinInputField required />
+                </PinInput>
+                <Button _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}} bgGradient="linear( rgb(51,99,100), rgb(167,210,137))" onClick={generateRandomNumber}>Generate OTP</Button>
+              </HStack>
 
               <Button
                 type="submit"
@@ -364,6 +399,7 @@ export function Checkout() {
                 bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
                 mt={5}
                 width="100%"
+                _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
               >
                 Place Order
               </Button>

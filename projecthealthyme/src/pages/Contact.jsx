@@ -115,6 +115,7 @@ export function Contact() {
             <Textarea color="white" type="text" />
 
             <Button
+            _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
               onClick={() =>
                 toast({
                   title: "Message Sent",

@@ -4,16 +4,11 @@ import { Navbar } from "./Components/Navbar";
 import { Containers } from "./Structure/Containers";
 import { AllRoutes } from "./Components/AllRoutes";
 
-
 function App() {
-  
-
   return (
     <div className="App">
       <Navbar />
-      <AllRoutes/>
-      
-      
+      <AllRoutes />
     </div>
   );
 }
