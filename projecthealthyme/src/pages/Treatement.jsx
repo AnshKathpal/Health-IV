@@ -2,8 +2,9 @@ import { Navbar } from "../Components/Navbar";
 import { Footer } from "../Structure/Footer";
 import { Link } from "react-router-dom";
 import { extendTheme } from "@chakra-ui/react";
-import { ThemeContext } from "../Context/CustomThemeProvider"
+import { ThemeContext } from "../Context/CustomThemeProvider";
 import { useContext } from "react";
+import "../CSS/Treatement.css";
 
 import {
   Text,
@@ -104,38 +105,40 @@ export function Treatement({ text }) {
       <Container
         maxW="100%"
         // border="1px solid black"
-        style = {{background : theme === "dark" ?  "linear-gradient( rgb(65,116,91), #2E5D67, #000000)" : "linear-gradient( rgb(65,116,91), #2E5D67, white)"}}
-        
+        style={{
+          background:
+            theme === "dark"
+              ? "linear-gradient( rgb(65,116,91), #2E5D67, #000000)"
+              : "linear-gradient( rgb(65,116,91), #2E5D67, white)",
+        }}
       >
-        <Flex>
+        <Flex className="IVimage">
           <Box
-            height={{ base: "100px", sm: "300px", md: "700px" }}
-            width={{ base: "100px", sm: "300px", md: "700px" }}
+            height={{ md: "700px" }}
+            width={{ md: "700px" }}
             // border="1px solid red"
-            marginLeft={{ base: 100, sm: 240, md: 500 }}
+            marginLeft={{ md: 500 }}
+           
+            
           >
-            <Image src={IVImage} width="100%" alt="Check" />
+            <Image className="IVimageInner" src={IVImage} width={{ md : "100%"}} alt="Check" />
           </Box>
-          <Box
-            mt={{ base: 10, sm: 20, md: 40 }}
-            marginLeft={{ base: "100px", sm: -465, md: -967 }}
-          >
+          <Box mt={{ md: 40 }} marginLeft={{ md: -967 }}>
             <Text
-             style = {{color : theme === "dark" ? "white" : "black"}}
-              fontSize={{ base: 10, sm: "100px", md: "250px" }}
+              className="textInfusion"
+              style={{ color: theme === "dark" ? "white" : "black" }}
+              fontSize={{ md: "250px" }}
             >
               Infusion
             </Text>
           </Box>
         </Flex>
-        <Flex>
-          <Box
-            mt={{ base: 10, sm: "-130px", md: -80 }}
-            marginLeft={{ base: "100px", sm: 223, md: 600 }}
-          >
+        <Flex className="therBox">
+          <Box  mt={{ md: -80 }} ml="600px" >
             <Text
-             style = {{color : theme === "dark" ? "white" : "black"}}
-              fontSize={{ base: 10, sm: "100px", md: "250px" }}
+              className="textTher"
+              style={{ color: theme === "dark" ? "white" : "black" }}
+              fontSize={{ md: "250px" }}
             >
               Therapy
             </Text>
@@ -144,28 +147,30 @@ export function Treatement({ text }) {
 
         <Flex
           justifyContent="flex-end"
-          width={{ sm: "80%", md: "40%" }}
-          marginLeft={{ base: 10, sm: "100px", md: "800px" }}
+          width={{ md: "40%" }}
+          marginLeft={{ md: "800px" }}
         >
-          <Box>
+          <Box className="bookBtn">
             <Link to="/form">
               <Button
-                fontSize={{ sm: "10px", md: "15px" }}
-                width={{ sm: "100px", md: "180px" }}
-                height={{ sm: "30px", md: "40px" }}
-                mr={{ sm: 10, md: 20 }}
-                _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
+              className="button1"
+                fontSize={{ md: "15px" }}
+                width={{ md: "180px" }}
+                height={{ md: "40px" }}
+                mr={{ md: 20 }}
+                _hover={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;" }}
               >
                 Become a Member
               </Button>
             </Link>
             <AnchorLink href="#container">
               <Button
-                fontSize={{ sm: "10px", md: "15px" }}
-                width={{ sm: "100px", md: "180px" }}
-                height={{ sm: "30px", md: "40px" }}
+              className="button2"
+                fontSize={{ md: "15px" }}
+                width={{ md: "180px" }}
+                height={{ md: "40px" }}
                 bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
-                _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
+                _hover={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;" }}
               >
                 Book Session
               </Button>
@@ -174,27 +179,47 @@ export function Treatement({ text }) {
         </Flex>
       </Container>
 
-      <Container maxW="100%" p={100} style = {{background : theme === "dark" ?  "black" : "white"}}>
+      <Container
+        className="nurses"
+        maxW="100%"
+        p={100}
+        style={{ background: theme === "dark" ? "black" : "white" }}
+      >
         <Box>
-          <Text fontSize="40px" marginBottom={10} style = {{color : theme === "dark" ? "white" : "black"}}>
+          <Text
+            fontSize="40px"
+            marginBottom={10}
+            style={{ color: theme === "dark" ? "white" : "black" }}
+          >
             Schedule online in minutes. Our Nurses Comes to you.
           </Text>
 
           <Grid templateColumns="repeat(3, 1fr)" gap={40}>
             <GridItem w="100%" h="auto">
-              <Text fontSize="22px" style = {{color : theme === "dark" ? "white" : "black"}} mb={5}>
+              <Text
+                fontSize="22px"
+                style={{ color: theme === "dark" ? "white" : "black" }}
+                mb={5}
+              >
                 Easy Online Booking
               </Text>
               <Image src={Iphone} width="100%" alt="Check" />
             </GridItem>
             <GridItem w="100%" h="auto" mb={5}>
-              <Text fontSize="22px" style = {{color : theme === "dark" ? "white" : "black"}}>
+              <Text
+                fontSize="22px"
+                style={{ color: theme === "dark" ? "white" : "black" }}
+              >
                 Add a Covid-19 test
               </Text>
               <Image src={TestKit} width="100%" alt="Check" />
             </GridItem>
             <GridItem w="100%" h="auto">
-              <Text fontSize="22px" style = {{color : theme === "dark" ? "white" : "black"}} mb={5}>
+              <Text
+                fontSize="22px"
+                style={{ color: theme === "dark" ? "white" : "black" }}
+                mb={5}
+              >
                 At Home Service
               </Text>
               <Image src={Home} width="100%" alt="Check" />
@@ -202,16 +227,33 @@ export function Treatement({ text }) {
           </Grid>
         </Box>
       </Container>
-      <Container maxW="100%" p={100} style = {{background : theme === "dark" ?  "black" : "radial-gradient(closest-corner at 50% 60%,  rgb(65,116,91), #2E5D67, white)"}}>
+      <Container
+        maxW="100%"
+        p={100}
+        style={{
+          background:
+            theme === "dark"
+              ? "black"
+              : "radial-gradient(closest-corner at 50% 60%,  rgb(65,116,91), #2E5D67, white)",
+        }}
+      >
         <Flex justifyContent="space-between" alignItems="center" mb="20px">
-          <Box>
-            <Text fontSize="40px" style = {{color : theme === "dark" ? "white" : "black"}}>
+          <Box >
+            <Text
+            className="menuText"
+              fontSize={{md :"40px"}}
+              style={{ color: theme === "dark" ? "white" : "black" }}
+            >
               Treatement Menu
             </Text>
           </Box>
 
           <Box>
-            <Text fontSize="20px" style = {{color : theme === "dark" ? "white" : "black"}}>
+            <Text
+            className="menuText2"
+              fontSize={{md : "20px"}}
+              style={{ color: theme === "dark" ? "white" : "black" }}
+            >
               We Offer a wide range of therpies and booster suppliments
             </Text>
           </Box>
@@ -220,17 +262,16 @@ export function Treatement({ text }) {
           <Grid
             // border="1px solid red"
             templateColumns={{
-              base: "repeat(1, 1fr)",
-              sm: "repeat(2, 1fr)",
               md: "repeat(4, 1fr)",
             }}
-            gap={{ base: "20px", sm: "30px", md: "40px" }}
+            className="menu"
+            gap={{ md: "40px" }}
           >
             {data?.map((item) => (
               <GridItem
                 className="front"
                 borderRadius="3%"
-                bg="rgb(34,34,34)"  
+                bg="rgb(34,34,34)"
                 h="auto"
                 p={5}
               >
@@ -262,99 +303,179 @@ export function Treatement({ text }) {
           </Grid>
         </Box>
       </Container>
-      <Container maxW="100%" p={100} style={{background : theme === "dark" ?  "black" : "white"}}>
+      <Container
+        maxW= {{md:"100%"}}
+        p={100}
+        style={{ background: theme === "dark" ? "black" : "white" }}
+      >
         <Box>
-          <Text fontSize="40px" marginBottom={10} style = {{color : theme === "dark" ? "white" : "black"}}>
+          <Text
+            fontSize="40px"
+            marginBottom={10}
+            style={{ color: theme === "dark" ? "white" : "black" }}
+          >
             How does it works?
           </Text>
-          <Text fontSize="25px" marginBottom={10} style = {{color : theme === "dark" ? "white" : "black"}}>
+          <Text
+            fontSize="25px"
+            marginBottom={10}
+            style={{ color: theme === "dark" ? "white" : "black" }}
+          >
             At Health IV everything we do is based on one core principle. That
             health is for everybody. It doesn’t matter who you are or where you
             are, we want to help you feel rejuvenated.
           </Text>
-
-          <Grid
-            placeItems="center"
-            // border="1px solid white"
-            templateColumns="repeat(4, 1fr)"
-            gap={20}
-          >
-            <GridItem w="100%" h="auto">
-              <Text fontSize="18px" style = {{color : theme === "dark" ? "white" : "black"}} mb={5}>
-                Book appointments easily on your phone.
-              </Text>
-              <Image src={Phone} width="100%" alt="Check" />
-            </GridItem>
-            <GridItem w="100%" h="auto">
-              <Text fontSize="18px" style = {{color : theme === "dark" ? "white" : "black"}} mb={5}>
-                Choose from a wide selection of revitalizing treatments.
-              </Text>
-              <Image src={HomeTherapy} width="85%" alt="Check" />
-            </GridItem>
-            <GridItem w="100%" h="auto" mb={5}>
-              <Text fontSize="18px" style = {{color : theme === "dark" ? "white" : "black"}} mb={5}>
-                Include an at-home COVID test.
-              </Text>
-              <Image src={CovidTest} width="80%" alt="Check" />
-            </GridItem>
-            <GridItem w="100%" h="auto" mb={5}>
-              <Text fontSize="18px" style = {{color : theme === "dark" ? "white" : "black"}}>
-                Enjoy the benefits of IV therapy from the comfort of your home.
-              </Text>
-              <Image ml={10} src={Homie} width="80%" alt="Check" />
-            </GridItem>
-          </Grid>
+          <Box    >
+            <Grid
+            className="work"
+              placeItems="center"
+              // border="1px solid white"
+              templateColumns= {{md : "repeat(4, 1fr)"}}
+              gap={{md : 20 }}
+            
+            >
+              <GridItem w="100%" h="auto">
+                <Text
+                  fontSize="18px"
+                  style={{ color: theme === "dark" ? "white" : "black" }}
+                  mb={5}
+                >
+                  Book appointments easily on your phone.
+                </Text>
+                <Image src={Phone} width="100%" alt="Check" />
+              </GridItem>
+              <GridItem w="100%" h="auto">
+                <Text
+                  fontSize="18px"
+                  style={{ color: theme === "dark" ? "white" : "black" }}
+                  mb={5}
+                >
+                  Choose from a wide selection of revitalizing treatments.
+                </Text>
+                <Image src={HomeTherapy} width="85%" alt="Check" />
+              </GridItem>
+              <GridItem w="100%" h="auto" mb={5}>
+                <Text
+                  fontSize="18px"
+                  style={{ color: theme === "dark" ? "white" : "black" }}
+                  mb={5}
+                >
+                  Include an at-home COVID test.
+                </Text>
+                <Image src={CovidTest} width="80%" alt="Check" />
+              </GridItem>
+              <GridItem w="100%" h="auto" mb={5}>
+                <Text
+                  fontSize="18px"
+                  style={{ color: theme === "dark" ? "white" : "black" }}
+                >
+                  Enjoy the benefits of IV therapy from the comfort of your
+                  home.
+                </Text>
+                <Image ml={10} src={Homie} width="80%" alt="Check" />
+              </GridItem>
+            </Grid>
+          </Box>
         </Box>
       </Container>
 
       {/* Location Container */}
 
-      <Container maxW="100%" p={100} style={{background : theme === "dark" ?  "black" : "white"}}>
+      <Container
+        maxW="100%"
+        p={100}
+        style={{ background: theme === "dark" ? "black" : "white" }}
+      >
         <Box mb="5%">
-          <Text fontSize="40px" marginBottom={10} style = {{color : theme === "dark" ? "white" : "black"}}>
+          <Text
+            fontSize="40px"
+            marginBottom={10}
+            style={{ color: theme === "dark" ? "white" : "black" }}
+          >
             Our locations
           </Text>
-          <Text fontSize="25px" marginBottom={10} style = {{color : theme === "dark" ? "white" : "black"}}>
+          <Text
+            className="locationText"
+            fontSize="25px"
+            marginBottom={10}
+            style={{ color: theme === "dark" ? "white" : "black" }}
+          >
             We believe in making wellness mobile. Healthcare shouldn’t be
             stressful. It should be accessible. Schedule an appointment online
             and one of our healthcare professionals will visit you in the
             comfort of your own home.
           </Text>
-
-          <Grid templateColumns="repeat(3, 1fr)" gap={40}>
-            {citiesData &&
-              citiesData?.map((cities) => (
-                <GridItem placeItems="center" w="100%" h="auto">
-                  <Image
-                    margin="auto"
-                    src={cities.cityImage}
-                    borderRadius="50%"
-                    width="30%"
-                    alt="Check"
-                  />
-                  <Text fontSize="22px" style = {{color : theme === "dark" ? "white" : "black"}} mt={4}>
-                    {cities.city}
-                  </Text>
-                </GridItem>
-              ))}
-          </Grid>
+          <Box  >
+            <Grid
+            className="locations"
+               templateColumns={{ md :"repeat(3, 1fr)"}}
+              gap={40}
+            >
+              {citiesData &&
+                citiesData?.map((cities) => (
+                  <GridItem placeItems="center" w="100%" h="auto">
+                    <Image
+                      margin="auto"
+                      src={cities.cityImage}
+                      borderRadius="50%"
+                      width="30%"
+                      alt="Check"
+                    />
+                    <Text
+                      fontSize="22px"
+                      style={{ color: theme === "dark" ? "white" : "black" }}
+                      mt={4}
+                    >
+                      {cities.city}
+                    </Text>
+                  </GridItem>
+                ))}
+            </Grid>
+          </Box>
         </Box>
 
-        <Box p={10} width="50%" margin="auto" style = {{border : theme === "dark" ? "1px solid white" : "1px solid black"}}>
-          <Text fontSize="40px" marginBottom={10} style = {{color : theme === "dark" ? "white" : "black", borderBottom : theme === "dark" ? "1px solid white" : "1px solid black"}}>
+        <Box
+          className="form"
+          p={10}
+          width="50%"
+          margin="auto"
+          style={{
+            border: theme === "dark" ? "1px solid white" : "1px solid black",
+          }}
+        >
+          <Text
+            fontSize="40px"
+            marginBottom={10}
+            style={{
+              color: theme === "dark" ? "white" : "black",
+              borderBottom:
+                theme === "dark" ? "1px solid white" : "1px solid black",
+            }}
+          >
             Join our waitlist
           </Text>
-          <Text fontSize="22px" marginBottom={10} style = {{color : theme === "dark" ? "white" : "black" , borderBottom : theme === "dark" ? "1px solid white" : "1px solid black"}}>
+          <Text
+            fontSize="22px"
+            marginBottom={10}
+            style={{
+              color: theme === "dark" ? "white" : "black",
+              borderBottom:
+                theme === "dark" ? "1px solid white" : "1px solid black",
+            }}
+          >
             Don’t see your region on our list? We’ll let you know when our
             service area expands.
           </Text>
           <form onSubmit={handlewaitlist}>
             <FormControl required>
-              <FormLabel fontSize="20px" style = {{color : theme === "dark" ? "white" : "black"}}>
+              <FormLabel
+                fontSize="20px"
+                style={{ color: theme === "dark" ? "white" : "black" }}
+              >
                 Email Address
               </FormLabel>
               <Input
-                style = {{color : theme === "dark" ? "white" : "black"}}
+                style={{ color: theme === "dark" ? "white" : "black" }}
                 mb="10px"
                 type="email"
                 value={email}
@@ -363,11 +484,14 @@ export function Treatement({ text }) {
                 }}
                 required
               />
-              <FormLabel fontSize="20px" style = {{color : theme === "dark" ? "white" : "black"}}>
+              <FormLabel
+                fontSize="20px"
+                style={{ color: theme === "dark" ? "white" : "black" }}
+              >
                 Address
               </FormLabel>
               <Input
-                style = {{color : theme === "dark" ? "white" : "black"}}
+                style={{ color: theme === "dark" ? "white" : "black" }}
                 type="text"
                 value={address}
                 onChange={(e) => {
@@ -386,7 +510,7 @@ export function Treatement({ text }) {
                 //     isClosable: true,
                 //   })
                 // }
-                _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
+                _hover={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;" }}
                 type="submit"
                 bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
                 mt={5}
@@ -407,26 +531,52 @@ export function Treatement({ text }) {
       >
         <Flex justifyContent="center" alignItems="center" h="100%">
           <Box fontSize={30} mr={10}>
-            <Text fontWeight="bolder" style = {{color : theme === "dark" ? "white" : "black"}}>
+            <Text
+              fontWeight="bolder"
+              style={{ color: theme === "dark" ? "white" : "black" }}
+            >
               {" "}
               Get up to 34% off a treatment each month
             </Text>
           </Box>
-          <Box width="400px" ml={10} p={5} border="3px solid white">
-            <Text fontWeight="bolder" fontSize={20} style = {{color : theme === "dark" ? "white" : "black"}}>
+          <Box className="membership" width={{ md : "400px"}} ml={{md : 10}} p={5} border= {{md : "3px solid white"}}>
+            <Text
+              fontWeight="bolder"
+              fontSize={20}
+              style={{ color: theme === "dark" ? "white" : "black" }}
+            >
               Membership price
             </Text>
-            <Text mt={5} fontSize={35} fontWeight="bolder" style = {{color : theme === "dark" ? "white" : "black"}}>
+            <Text
+              mt={5}
+              fontSize={35}
+              fontWeight="bolder"
+              style={{ color: theme === "dark" ? "white" : "black" }}
+            >
               $199
             </Text>
-            <Text fontWeight="bolder" fontSize={20} style = {{color : theme === "dark" ? "white" : "black"}}>
+            <Text
+              fontWeight="bolder"
+              fontSize={20}
+              style={{ color: theme === "dark" ? "white" : "black" }}
+            >
               1 Credit
             </Text>
-            <Text mt={5} fontWeight="bolder" fontSize={15} style = {{color : theme === "dark" ? "white" : "black"}}>
+            <Text
+              mt={5}
+              fontWeight="bolder"
+              fontSize={15}
+              style={{ color: theme === "dark" ? "white" : "black" }}
+            >
               Receive a credit towards any treatment under $500 each month.
             </Text>
             <Link to="/form">
-              <Button _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}} mt={10} style = {{color : theme === "dark" ? "white" : "white"}} bg="black">
+              <Button
+                _hover={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;" }}
+                mt={10}
+                style={{ color: theme === "dark" ? "white" : "white" }}
+                bg="black"
+              >
                 Become a Member
               </Button>
             </Link>

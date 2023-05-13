@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../Context/CustomThemeProvider"
 import { useContext } from "react";
 import {SunIcon } from '@chakra-ui/icons'
-
+import "../CSS/Navbar.css"
 
 import {
   Flex,
@@ -75,9 +75,10 @@ export function Navbar() {
       w="100%"
       p={4}
       color="black"
-      display={{sm:"none", md:"block"}}
+      // display={{"390px":"none", md:"block"}}
+      className="navBox"
     >
-      <Flex minWidth="max-content" alignItems="center" gap="2">
+      <Flex className = "main" minWidth="max-content" alignItems="center" gap="2">
         <Box p="2">
           {/* <Logo border="1px solid red" /> */}
           <Link to="/">
