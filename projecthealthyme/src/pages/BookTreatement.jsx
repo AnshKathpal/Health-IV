@@ -190,6 +190,7 @@ export function BookTreatement() {
           </Text>
           <AnchorLink href="#formBooking">
             <Button
+            _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
               bgGradient="linear( rgb(51,99,100), rgb(167,210,137))"
               mt={10}
             >
@@ -344,6 +345,7 @@ export function BookTreatement() {
               w="100%"
               mt={10}
               type="submit"
+              _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
             >
               Continue to Cart
             </Button>

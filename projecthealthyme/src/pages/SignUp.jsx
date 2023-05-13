@@ -175,6 +175,7 @@ function SignUp() {
               mt={5}
               width="100%"
               type="submit"
+              _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
             >
               Sign Up
             </Button>
