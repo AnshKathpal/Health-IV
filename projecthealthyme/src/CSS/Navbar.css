@@ -2,8 +2,23 @@
 
 @media all and (min-width: 390px) and (max-width:1010px) {
     
-    .navBox{
-        display: none;
+
+     .navBarRes{
+        display: block;
     }
+
+    .navBox{
+        display : block;
+    }
+
+    .main {
+        display : none;
+    }
+
+    .displayHam{
+        display : block;
+    }
+
+
     
   }

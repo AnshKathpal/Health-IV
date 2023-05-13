@@ -1,9 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Input, useDisclosure, Button } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import { ThemeContext } from "../Context/CustomThemeProvider"
+import { ThemeContext } from "../Context/CustomThemeProvider";
 import { useContext } from "react";
-import {SunIcon } from '@chakra-ui/icons'
-import "../CSS/Navbar.css"
+import { SunIcon, HamburgerIcon } from "@chakra-ui/icons";
+import "../CSS/Navbar.css";
+import { NavbarRes } from "../Components/NavbarRes";
+
+import React from "react";
 
 import {
   Flex,
@@ -17,8 +20,15 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
-import { Button, ButtonGroup, Stack, HStack, VStack } from "@chakra-ui/react";
+import { ButtonGroup, Stack, HStack, VStack } from "@chakra-ui/react";
 import { Logo } from "../Structure/Logo";
 import Login from "../pages/Login";
 import { useState } from "react";
@@ -54,6 +64,9 @@ const links = [
 ];
 
 export function Navbar() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+
   const [loginStatus, setLoginStatus] = useState(false);
 
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -70,7 +83,7 @@ export function Navbar() {
 
   return (
     <Box
-      // border="1px solid red"
+      // border="1px solid blue"
       bg="rgb(65,116,91)"
       w="100%"
       p={4}
@@ -78,15 +91,24 @@ export function Navbar() {
       // display={{"390px":"none", md:"block"}}
       className="navBox"
     >
-      <Flex className = "main" minWidth="max-content" alignItems="center" gap="2">
-        <Box p="2">
+      <Box className="main">
+
+      
+      <Flex
+        // border="1px solid red"
+        className="main"
+        minWidth="max-content"
+        alignItems="center"
+        gap="2"
+      >
+        <Box   p="2">
           {/* <Logo border="1px solid red" /> */}
           <Link to="/">
-            <Image w="250px" src={logoImage}></Image>
+            <Image   w="250px" src={logoImage}></Image>
           </Link>
         </Box>
         <Spacer />
-        <ButtonGroup >
+        <ButtonGroup  className="main">
           {links.map((item) => {
             return (
               <NavLink
@@ -96,13 +118,13 @@ export function Navbar() {
                 key={item.path}
                 to={item.path}
               >
-                <Button
+                <Button  className="main"
                   fontSize="12px"
                   p={6}
                   bg="rgb(80,133,104)"
                   variant="solid"
                   boxShadow="base"
-                  _hover={{boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px;"}}
+                  _hover={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;" }}
                 >
                   {item.title}
                 </Button>
@@ -126,30 +148,87 @@ export function Navbar() {
             //   {loginStatus.name}
             // </Button>
 
-            <ToggleButton  userData={loginStatus}  isLoggedIn={(e) => setLoginStatus(e)} />
+            <ToggleButton  className="main"
+              userData={loginStatus}
+              isLoggedIn={(e) => setLoginStatus(e)}
+            />
           ) : (
             // <h1 userData={loginStatus} isLoggedIn={(e) => setLoginStatus(e)}>{loginStatus.name}</h1>
             <Login isLoggedIn={(e) => setLoginStatus(e)} />
           )}
 
-<SunIcon
-w="50px"
-h="50px"
- fontSize="12px"
- p={6}
-        onClick={toggleTheme}
-        style={{
-          // border: theme == "dark" ? "solid white" : "pink",
-          color: theme == "dark" ? "black" : "white",
-          background: theme == "dark" ? "rgb(65,116,91)" : "rgb(65,116,91)",
-          padding : "5px"
-        }}
-      >
-        Change Theme
-      </SunIcon>
-
+          <SunIcon
+            w="50px"
+            h="50px"
+            fontSize="12px"
+            p={6}
+            onClick={toggleTheme}
+            style={{
+              // border: theme == "dark" ? "solid white" : "pink",
+              color: theme == "dark" ? "black" : "white",
+              background: theme == "dark" ? "rgb(65,116,91)" : "rgb(65,116,91)",
+              padding: "5px",
+            }}
+          >
+            Change Theme
+          </SunIcon>
         </ButtonGroup>
       </Flex>
+      </Box>
+      <Box className = "displayHam" display={{md : "none"}}>
+        <HamburgerIcon width="30px" height="30px" ref={btnRef} colorScheme="teal" onClick={onOpen}>
+          Open
+        </HamburgerIcon>
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent color="white" bg = "rgb(80,133,104)">
+            <DrawerCloseButton />
+            <DrawerHeader><Link to="/">
+            <Image   w="250px" src={logoImage}></Image>
+          </Link></DrawerHeader>
+
+            <DrawerBody>
+            <Flex flexDirection="column">
+            {links.map((item) => {
+            return (
+              <NavLink
+                style={({ isActive }) =>
+                  isActive ? activeStyle : defaultStyle
+                }
+                key={item.path}
+                to={item.path}
+              >
+                <Button  mt="20px" className="main"
+                  fontSize="12px"
+                  p={6}
+                  bg="rgb(80,133,104)"
+                  variant="solid"
+                  boxShadow="base"
+                  _hover={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;" }}
+                >
+                  {item.title}
+                </Button>
+              </NavLink>
+            );
+          })}
+               </Flex>
+            </DrawerBody>
+       
+
+            {/* <DrawerFooter>
+              <Button variant="outline" mr={3} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme="blue">Save</Button>
+            </DrawerFooter> */}
+          </DrawerContent>
+        </Drawer>
+      </Box>
     </Box>
   );
 }
