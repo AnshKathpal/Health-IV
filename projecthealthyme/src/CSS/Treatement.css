@@ -1,0 +1,96 @@
+@media all and (min-width: 390px) and (max-width:844px) {
+    
+    .textInfusion{
+        display: none;
+    }
+
+    .textTher{
+        display: none;
+    }
+
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        gap: 20px;
+    }
+
+    .nurses{
+        display: none;
+    }
+
+    .locations{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+    }
+
+    .locationText{
+        display: none;
+    }
+
+    .work{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        /* flex-wrap: wrap; */
+    }
+
+    .form{
+        display: none;
+    }
+
+    .menuText{
+        font-size: 20px;
+        text-align: center;
+    }
+    .menuText2{
+        display: none;
+    }
+
+    .membership{
+        border: none;
+    }
+    
+    .bookBtn{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+
+    
+  }
+
+
+  @media all and (min-width: 845px) and (max-width:1500px){
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px;
+    }
+
+    .textTher{
+        display: none;
+    }
+    .textInfusion{
+        display: none;
+    }
+
+    .IVimage{
+        /* border: 1px solid red; */
+        margin-left: 0%;
+    }
+
+
+    .IVimageInner{
+        /* border: 1px solid blue; */
+        width: 70%;
+    }
+
+    .bookBtn{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        margin-left: 0%;
+    }
+    
+
+  }
